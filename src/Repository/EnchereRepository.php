@@ -31,22 +31,24 @@ class EnchereRepository extends ServiceEntityRepository
         if($enchereId){
             return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere','t')
                 ->andWhere('e.datefin > :ladate')
                 ->andWhere('e.id = :enchereId')
                 ->setParameter(':enchereId',$enchereId)
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
-                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,p.id AS produit_id")            
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,t.id AS type_enchere_id,p.id AS produit_id")            
                 ->getQuery()
                 ->getResult()
             ;
         }else{
             return $this->createQueryBuilder('e')
-            ->innerjoin('e.leproduit', 'p')
+                ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere','t')
                 ->andWhere('e.datedebut > :ladate')
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
-                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,p.id AS produit_id")            
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,t.id AS type_enchere_id,p.id AS produit_id")            
                 ->getQuery()
                 ->getResult()
             ;
@@ -59,21 +61,23 @@ class EnchereRepository extends ServiceEntityRepository
         if($enchereId){
             return $this ->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere','t')
                 ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
                 ->andWhere('e.id = :enchereId')
                 ->setParameter(':enchereId', $enchereId)
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
-                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,p.id AS produit_id")            
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,t.id AS type_enchere_id,p.id AS produit_id")            
                 ->getQuery()
                 ->getResult();
         }else{
             return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere','t')
                 ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
-                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,p.id AS produit_id")            
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,t.id AS type_enchere_id,p.id AS produit_id")            
                 ->getQuery()
                 ->getResult();
         }
@@ -82,12 +86,13 @@ class EnchereRepository extends ServiceEntityRepository
     public function findEncheresParticipes(User $user){
         return $this->createQueryBuilder('e')
             ->innerJoin('e.leproduit','p')
+            ->innerJoin('e.letypeenchere','t')
             ->innerJoin('e.lesencherirs','en')
             ->innerJoin('en.leuser','u')
             ->andWhere('u.id = :userID')
             ->orderBy('e.datedebut','ASC')
             ->setParameter(':userID',$user->getId())
-            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,p.id AS produit_id")
+            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,t.id AS type_enchere_id, p.id AS produit_id")
             ->getQuery()
             ->getResult();
             
