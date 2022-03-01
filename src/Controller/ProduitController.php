@@ -47,6 +47,8 @@ class ProduitController extends AbstractController
         $postdata = json_decode($request->getContent());
         $produit = new Produit();
         $produit->setNom($postdata->Nom);
+         $produit->setPhoto($postdata->Photo);
+          $produit->setPrixreel($postdata->Prixreel);
         
 
         $manager = $this->getDoctrine()->getManager();
