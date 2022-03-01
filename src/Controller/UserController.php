@@ -61,4 +61,27 @@ class UserController extends AbstractController
 
         return $response;
     }
+        /**
+     * @Route("/api/postUser", name="postUser")
+     */
+    public function PostUser(Request $request,EntityManagerInterface $manager)
+    {
+        $postdata = json_decode($request->getContent());
+        $user = new User();
+        $user->setEmail($postdata->Email);
+        $user->setPassword($postdata->Password);
+
+        $user->setPseudo($postdata->Pseudo);
+        $user->setphoto($postdata->Photo);
+        
+
+       
+        $manager->persist($user);
+        $manager->flush();
+
+        $response = new Response($user->getId());
+        $response->headers->set('Content-Type', 'text/html');
+
+        return $response;
+    }
 }
