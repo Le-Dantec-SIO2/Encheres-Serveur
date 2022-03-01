@@ -49,10 +49,11 @@ class EncheresController extends AbstractController
     }
 
     /**
-     * @Route("/api/getEncheres/{enchereId}", defaults={"enchereId"= null},name="Getencheres")
+     * @Route("/api/getEnchere",name="Getenchere")
      */
-    public function Getencheres($enchereId, Request $request, EnchereRepository $enchereRepository)
+    public function Getencheres(Request $request, EnchereRepository $enchereRepository)
     {
+        $postdata = json_decode($request->getContent());
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -63,7 +64,7 @@ class EncheresController extends AbstractController
 
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $var = $enchereRepository->findEncheres($enchereId);
+        $var = $enchereRepository->findEncheres($postdata->Id);
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
