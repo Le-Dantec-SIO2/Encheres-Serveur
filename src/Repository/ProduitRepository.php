@@ -23,16 +23,17 @@ class ProduitRepository extends ServiceEntityRepository
         if($produitId){
             return $this->createQueryBuilder('p')
                 ->select('p.nom, p.photo')
+                ->andWhere('p.id = :produitId')
+                ->setParameter(':produitId', $produitId)
                 ->getQuery()
                 ->getResult();
         }
         else{
             return $this->createQueryBuilder('p')
                 ->select('p.nom, p.photo')
-                ->andWhere('p.id = :produitId')
-                ->setParameter(':produitId', $produitId)
                 ->getQuery()
                 ->getResult();
+
         }
     }
     // /**
