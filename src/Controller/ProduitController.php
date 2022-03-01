@@ -51,7 +51,7 @@ class ProduitController extends AbstractController
           $produit->setPrixreel($postdata->Prixreel);
         
 
-        $manager = $this->getDoctrine()->getManager();
+       
         $manager->persist($produit);
         $manager->flush();
 
