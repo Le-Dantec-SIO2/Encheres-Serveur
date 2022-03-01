@@ -18,9 +18,9 @@ class ProduitController extends AbstractController
 {
 	
      /** 
-     * @Route("/api/getProduits", name="getProduits")
+     * @Route("/api/getProduits/{produitId}", defaults={"produitId" = null} name="getProduits")
     */
-    public function GetProduits(Request $request, ProduitRepository $produitRepository){
+    public function GetProduits($produitId,Request $request, ProduitRepository $produitRepository){
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -30,7 +30,7 @@ class ProduitController extends AbstractController
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $var =$produitRepository->findProduits();
+        $var =$produitRepository->findProduits($produitId);
         $data =  $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
