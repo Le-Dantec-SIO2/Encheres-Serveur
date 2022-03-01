@@ -1,10 +1,12 @@
-<? 
+<?php 
 namespace App\Controller;
 
+use App\Entity\Produit;
 use App\Repository\ProduitRepository;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -33,5 +35,25 @@ class ProduitController extends AbstractController
 
         return $response;
 
+    }
+
+    /**
+     * @Route("/api/postProduit", name="postProduit")
+     */
+    public function PostProduit(Request $request)
+    {
+        $postdata = json_decode($request->getContent());
+        $produit = new Produit();
+        $produit->setNom($postdata->Nom);
+        
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($produit);
+        $em->flush();
+
+        $response = new Response("ok");
+        $response->headers->set('Content-Type', 'text/html');
+
+        return $response;
     }
 }
