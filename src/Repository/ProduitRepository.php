@@ -21,7 +21,7 @@ class ProduitRepository extends ServiceEntityRepository
 
     public function findProduits(){
         return $this->createQueryBuilder('p')
-            ->select('p.id, p.nom')
+            ->select('p.id, p.nom, p.photo')
             ->getQuery()
             ->getResult();
     }

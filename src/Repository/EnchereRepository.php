@@ -37,7 +37,7 @@ class EnchereRepository extends ServiceEntityRepository
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
                 ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,p.nom,p.photo,
-                p.prixreel,p.id AS dd")            
+                p.prixreel")            
                 ->getQuery()
                 ->getResult()
             ;
@@ -48,7 +48,7 @@ class EnchereRepository extends ServiceEntityRepository
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
                 ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,p.nom,p.photo,
-                p.prixreel,p.id AS dd")            
+                p.prixreel")            
                 ->getQuery()
                 ->getResult()
             ;
@@ -67,7 +67,7 @@ class EnchereRepository extends ServiceEntityRepository
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
                 ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,p.nom,p.photo,
-                p.prixreel,p.id AS dd")            
+                p.prixreel")            
                 ->getQuery()
                 ->getResult();
         }else{
@@ -77,7 +77,7 @@ class EnchereRepository extends ServiceEntityRepository
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
                 ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,p.nom,p.photo,
-                p.prixreel,p.id AS dd")            
+                p.prixreel")            
                 ->getQuery()
                 ->getResult();
         }
