@@ -18,7 +18,7 @@ class ProduitController extends AbstractController
 {
 	
      /** 
-     * @Route("/api/getProduits/{produitId}", defaults={"produitId" = null} name="getProduits")
+     * @Route("/api/getProduits/{produitId}", defaults={"produitId" = null}, name="getProduits")
     */
     public function GetProduits($produitId,Request $request, ProduitRepository $produitRepository){
         $encoder = new JsonEncoder();
