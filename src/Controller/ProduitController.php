@@ -55,7 +55,7 @@ class ProduitController extends AbstractController
         $manager->persist($produit);
         $manager->flush();
 
-        $response = new Response("ok");
+        $response = new Response($produit->getId());
         $response->headers->set('Content-Type', 'text/html');
 
         return $response;
