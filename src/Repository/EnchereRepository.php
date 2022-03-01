@@ -31,7 +31,7 @@ class EnchereRepository extends ServiceEntityRepository
         if($enchereId){
             return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
-                ->andWhere('e.datedebut > :ladate')
+                ->andWhere('e.datefin > :ladate')
                 ->andWhere('e.id = :enchereId')
                 ->setParameter(':enchereId',$enchereId)
                 ->orderBy('e.datedebut', 'ASC')
