@@ -11,6 +11,8 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class ProduitController extends AbstractController
 {
@@ -40,16 +42,16 @@ class ProduitController extends AbstractController
     /**
      * @Route("/api/postProduit", name="postProduit")
      */
-    public function PostProduit(Request $request)
+    public function PostProduit(Request $request,EntityManagerInterface $manager)
     {
         $postdata = json_decode($request->getContent());
         $produit = new Produit();
         $produit->setNom($postdata->Nom);
         
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($produit);
-        $em->flush();
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($produit);
+        $manager->flush();
 
         $response = new Response("ok");
         $response->headers->set('Content-Type', 'text/html');
