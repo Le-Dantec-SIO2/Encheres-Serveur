@@ -34,4 +34,24 @@ class ProduitController extends AbstractController
         return $response;
 
     }
+
+    /**
+     * @Route("/api/postProduit", name="postProduit")
+     */
+    public function PostProduit(Request $request)
+    {
+        $postdata = json_decode($request->getContent());
+        $produit = new Produit();
+        $produit->setNom($postdata->Nom);
+        
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($produit);
+        $em->flush();
+
+        $response = new Response("ok");
+        $response->headers->set('Content-Type', 'text/html');
+
+        return $response;
+    }
 }
