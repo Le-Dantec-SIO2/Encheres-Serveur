@@ -17,31 +17,10 @@ use Doctrine\ORM\EntityManagerInterface;
 class ProduitController extends AbstractController
 {
 	
-     /** 
-     * @Route("/api/getProduits/{produitId}", defaults={"produitId" = null}, name="getProduits")
-    */
-    public function GetProduits($produitId,Request $request, ProduitRepository $produitRepository){
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $data = $request->getContent();
-        $var =$produitRepository->findProduits($produitId);
-        $data =  $serializer->serialize($var, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-
-    }
     /** 
-     * @Route("/api/getProduitById", name="getProduitById")
+     * @Route("/api/getProduit", name="getProduit")
     */
-    public function GetProduitById(Request $request, ProduitRepository $produitRepository){
+    public function GetProduit(Request $request, ProduitRepository $produitRepository){
         $postdata = json_decode($request->getContent());
         if (isset($postdata->Id)) {
             $id = $postdata->Id;
