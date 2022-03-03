@@ -40,7 +40,7 @@ class UserController extends AbstractController
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $enchere = $enchereRepository->findOneBy(['id' => $postdata->Id]);
+        $enchere = $enchereRepository->findOneBy(['id' => $id]);
         $var = $encherirRepository->findGagnantEnchere($enchere);
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
@@ -55,6 +55,20 @@ class UserController extends AbstractController
     public function GetUserByMailAndPass(Request $request, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
+        if (isset($postdata->email)) {
+            $email = $postdata->email;
+        } else {
+            $response = new Response('MISSING_ARGUMENT_EMAIL');
+            $response->headers->set('Content-Type', 'text/html');
+            return $response;
+        }
+        if (isset($postdata->password)) {
+            $password = $postdata->password;
+        } else {
+            $response = new Response('MISSING_ARGUMENT_PASSWORD');
+            $response->headers->set('Content-Type', 'text/html');
+            return $response;
+        }
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -65,7 +79,7 @@ class UserController extends AbstractController
 
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $var = $userRepository->findUserByEmailAndPass(['email' => $postdata->email],['password' => $postdata ->password]);
+        $var = $userRepository->findUserByEmailAndPass(['email' => $email],['password' => $password]);
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
