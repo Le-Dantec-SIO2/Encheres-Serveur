@@ -50,10 +50,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/api/getUser/{userId}",name="GetUser")
+     * @Route("/api/getUserByMailAndPass",name="GetUserByMailAndPass")
      */
-    public function GetUserById($userId, Request $request, UserRepository $userRepository)
+    public function GetUserByMailAndPass(Request $request, UserRepository $userRepository)
     {
+        $postdata = json_decode($request->getContent());
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -64,7 +65,7 @@ class UserController extends AbstractController
 
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $var = $userRepository->findUserById(['id' => $userId]);
+        $var = $userRepository->findUserByEmailAndPass(['email' => $postdata->email],['password' => $postdata ->password]);
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -90,7 +91,7 @@ class UserController extends AbstractController
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
         $response = new Response();
-        // $var = $userRepository->findUserByEmail($mail);
+        // $var = $userRepository->findUserByEmailAndPass($mail);
         // if(1){
         // $data = $serializer->serialize($var, 'json');
         // $response = new Response($data);
