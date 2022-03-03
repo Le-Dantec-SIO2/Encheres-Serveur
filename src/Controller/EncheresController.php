@@ -155,7 +155,7 @@ class EncheresController extends AbstractController
 
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $var = $enchereRepository->findEnchere($id);
+        $var = $enchereRepository->findEnchere($postdata->Id);
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
