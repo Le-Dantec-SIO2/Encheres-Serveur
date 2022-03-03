@@ -54,7 +54,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
     */
 
-     
+
     public function findUserById($userId)
     {
         return $this->createQueryBuilder('u')
@@ -63,42 +63,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setParameter('val', $userId)
             ->orderBy('u.id', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
-    public function findUserByEmail($mail){
+    public function findUserByEmail($mail)
+    {
         return $this->createQueryBuilder('u')
-            ->select('u.id','u.pseudo','u.photo','u.password')
+            ->select('u.id', 'u.pseudo', 'u.photo', 'u.password')
             ->andWhere('u.email = :email')
-            ->setParameter(':email',$mail)
+            ->setParameter(':email', $mail)
             ->getQuery()
             ->getResult();
     }
-    public function findGagnantEnchere(Enchere $enchere){
-        if($enchere->getDatefin()< new \DateTime('now')){
-        $maxDate = $this->createQueryBuilder('en')
-            ->andWhere('en.laenchere = :laenchere')
-            ->setParameter(':laenchere',$enchere)
-            ->select('MAX(en.dateenchere)')
-            ->getQuery()
-            ->getResult();
-        return $this->createQueryBuilder('en')
-            ->innerJoin('en.leuser','u')
-            ->andwhere('en.laenchere = :laenchere')
-            ->andWhere('en.dateenchere = :ladatemax')
-            ->setParameter(':laenchere',$enchere)
-            ->setParameter(':ladatemax',$maxDate)
-            ->select('u.pseudo','u.photo')
-            ->getQuery()
-            ->getResult();
-        }
-        else{
-            return null;
-        }
-    }
-
-    
-
-    
 }

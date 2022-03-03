@@ -138,7 +138,7 @@ class EncheresController extends AbstractController
         return $response;
     }
 
-     /**
+    /**
      * @Route("/api/getEnchereTest",name="Getencheretest")
      */
     public function GetenchereTest(Request $request, EnchereRepository $enchereRepository)

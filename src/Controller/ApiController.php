@@ -17,7 +17,4 @@ class ApiController extends AbstractController
             'controller_name' => 'ApiController',
         ]);
     }
-
-
-
 }

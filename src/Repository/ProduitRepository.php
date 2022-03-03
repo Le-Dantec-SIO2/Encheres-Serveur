@@ -19,21 +19,20 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
-    public function findProduits($produitId = false){
-        if($produitId){
+    public function findProduits($produitId = false)
+    {
+        if ($produitId) {
             return $this->createQueryBuilder('p')
                 ->select('p.nom, p.photo')
                 ->andWhere('p.id = :produitId')
                 ->setParameter(':produitId', $produitId)
                 ->getQuery()
                 ->getResult();
-        }
-        else{
+        } else {
             return $this->createQueryBuilder('p')
                 ->select('p.nom, p.photo')
                 ->getQuery()
                 ->getResult();
-
         }
     }
     // /**

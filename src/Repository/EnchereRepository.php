@@ -110,24 +110,45 @@ class EnchereRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-         public function findEnchere($enchereId = false)
+    public function findEnchere($enchereId = false)
     {
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
-        
-            return $this->createQueryBuilder('e')
-                ->innerjoin('e.leproduit', 'p')
-                ->innerJoin('e.letypeenchere','t')
-                ->andWhere('e.datefin > :ladate')
-                ->andWhere('e.id = :enchereId')
-                ->setParameter(':enchereId',$enchereId)
-                ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate',$ladate)
-                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")            
+
+        return $this->createQueryBuilder('e')
+            ->innerjoin('e.leproduit', 'p')
+            ->innerJoin('e.letypeenchere', 't')
+            ->andWhere('e.datefin > :ladate')
+            ->andWhere('e.id = :enchereId')
+            ->setParameter(':enchereId', $enchereId)
+            ->orderBy('e.datedebut', 'ASC')
+            ->setParameter('ladate', $ladate)
+            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    public function findGagnantEnchere(Enchere $enchere)
+    {
+        if ($enchere->getDatefin() < new \DateTime('now')) {
+            $maxDate = $this->createQueryBuilder('en')
+                ->andWhere('en.laenchere = :laenchere')
+                ->setParameter(':laenchere', $enchere)
+                ->select('MAX(en.dateenchere)')
                 ->getQuery()
-                ->getOneOrNullResult()
-            ;
-            }
+                ->getResult();
+            return $this->createQueryBuilder('en')
+                ->innerJoin('en.leuser', 'u')
+                ->andwhere('en.laenchere = :laenchere')
+                ->andWhere('en.dateenchere = :ladatemax')
+                ->setParameter(':laenchere', $enchere)
+                ->setParameter(':ladatemax', $maxDate)
+                ->select('u.pseudo', 'u.photo')
+                ->getQuery()
+                ->getResult();
+        } else {
+            return null;
+        }
+    }
     /*
     public function findOneBySomeField($value): ?Enchere
     {

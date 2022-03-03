@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Controller;
 
 use App\Entity\Produit;
@@ -16,11 +17,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ProduitController extends AbstractController
 {
-	
+
     /** 
      * @Route("/api/getProduit", name="getProduit")
-    */
-    public function GetProduit(Request $request, ProduitRepository $produitRepository){
+     */
+    public function GetProduit(Request $request, ProduitRepository $produitRepository)
+    {
         $postdata = json_decode($request->getContent());
         if (isset($postdata->Id)) {
             $id = $postdata->Id;
@@ -36,7 +38,7 @@ class ProduitController extends AbstractController
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $var =$produitRepository->findProduits($id);
+        $var = $produitRepository->findProduits($id);
         $data =  $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -46,16 +48,16 @@ class ProduitController extends AbstractController
     /**
      * @Route("/api/postProduit", name="postProduit")
      */
-    public function PostProduit(Request $request,EntityManagerInterface $manager)
+    public function PostProduit(Request $request, EntityManagerInterface $manager)
     {
         $postdata = json_decode($request->getContent());
         $produit = new Produit();
         $produit->setNom($postdata->Nom);
-         $produit->setPhoto($postdata->Photo);
-          $produit->setPrixreel($postdata->Prixreel);
-        
+        $produit->setPhoto($postdata->Photo);
+        $produit->setPrixreel($postdata->Prixreel);
 
-       
+
+
         $manager->persist($produit);
         $manager->flush();
 

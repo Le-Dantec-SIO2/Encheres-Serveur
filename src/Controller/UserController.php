@@ -21,17 +21,16 @@ class UserController extends AbstractController
     /**
      * @Route("/api/getGagnant", name="getGagnant")
      */
-    public function getGagnant(Request $request, UserRepository $userRepository, EnchereRepository $enchereRepository)
+    public function getGagnant(Request $request, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
-        if (isset($postdata->Id)) 
+        if (isset($postdata->Id))
             $id = $postdata->Id;
-        else 
-            {
-                $response = new Response('MISSING_ARGUMENTS_PARAMETERS');
-                $response->headers->set('Content-Type', 'text/html');
-                return $response;
-            }
+        else {
+            $response = new Response('MISSING_ARGUMENTS_PARAMETERS');
+            $response->headers->set('Content-Type', 'text/html');
+            return $response;
+        }
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -42,7 +41,7 @@ class UserController extends AbstractController
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
         $enchere = $enchereRepository->findOneBy(['id' => $postdata->Id]);
-        $var = $userRepository->findGagnantEnchere($enchere);
+        $var = $enchereRepository->findGagnantEnchere($enchere);
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -57,10 +56,10 @@ class UserController extends AbstractController
     {
         $encoder = new JsonEncoder();
         $defaultContext = [
-    AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-        return $object->getId();
-    },
-];
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getId();
+            },
+        ];
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
 
         $serializer = new Serializer([$normalizer], [$encoder]);
@@ -72,7 +71,7 @@ class UserController extends AbstractController
 
         return $response;
     }
-    
+
     /**
      * @Route("/api/connect/",name="connect")
      */
@@ -82,10 +81,10 @@ class UserController extends AbstractController
         dd($postdata);
         $encoder = new JsonEncoder();
         $defaultContext = [
-    AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-        return $object->getId();
-    },
-];
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getId();
+            },
+        ];
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
 
         $serializer = new Serializer([$normalizer], [$encoder]);
@@ -102,13 +101,12 @@ class UserController extends AbstractController
         //     $response->headers->set('Content-Type', 'application/json');
         // }
         return $response;
-
     }
 
-        /**
+    /**
      * @Route("/api/postUser", name="postUser")
      */
-    public function PostUser(Request $request,EntityManagerInterface $manager)
+    public function PostUser(Request $request, EntityManagerInterface $manager)
     {
         $postdata = json_decode($request->getContent());
         $user = new User();
@@ -117,9 +115,9 @@ class UserController extends AbstractController
 
         $user->setPseudo($postdata->Pseudo);
         $user->setphoto($postdata->Photo);
-        
 
-       
+
+
         $manager->persist($user);
         $manager->flush();
 
@@ -128,5 +126,4 @@ class UserController extends AbstractController
 
         return $response;
     }
-    
 }
