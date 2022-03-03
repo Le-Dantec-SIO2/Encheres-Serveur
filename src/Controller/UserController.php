@@ -67,7 +67,7 @@ class UserController extends AbstractController
     /**
      * @Route("/api/connect/",name="connect")
      */
-    public function ConnectionUser(Request $request, UserRepository $userRepository)
+    public function Bidule(Request $request, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
         dd($postdata);
