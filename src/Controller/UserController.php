@@ -63,6 +63,39 @@ class UserController extends AbstractController
 
         return $response;
     }
+    
+    /**
+     * @Route("/api/connect/",name="connect")
+     */
+    public function Bidule(Request $request, UserRepository $userRepository)
+    {
+        $postdata = json_decode($request->getContent());
+        dd($postdata);
+        $encoder = new JsonEncoder();
+        $defaultContext = [
+    AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+        return $object->getId();
+    },
+];
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+
+        $serializer = new Serializer([$normalizer], [$encoder]);
+        $data = $request->getContent();
+        $response = new Response();
+        // $var = $userRepository->findUserByEmail($mail);
+        // if(1){
+        // $data = $serializer->serialize($var, 'json');
+        // $response = new Response($data);
+        // $response->headers->set('Content-Type', 'application/json');
+        // }else{
+        //     $data = "Mauvais identifiants";
+        //     $response = new Response($data, 401);
+        //     $response->headers->set('Content-Type', 'application/json');
+        // }
+        return $response;
+
+    }
+
         /**
      * @Route("/api/postUser", name="postUser")
      */
@@ -86,4 +119,5 @@ class UserController extends AbstractController
 
         return $response;
     }
+    
 }
