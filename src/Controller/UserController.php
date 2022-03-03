@@ -77,7 +77,7 @@ class UserController extends AbstractController
             $mail = null;
             $pass = null;
         }
-        dd(isset($postdata->Email), isset($postdata->Password));
+        dd($postdata);
         $encoder = new JsonEncoder();
         $defaultContext = [
     AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
