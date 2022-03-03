@@ -21,7 +21,7 @@ class UserController extends AbstractController
     /**
      * @Route("/api/getGagnant", name="getGagnant")
      */
-    public function getGagnant(Request $request, EnchereRepository $enchereRepository)
+    public function getGagnant(Request $request, EnchereRepository $enchereRepository, EncherirRepository $encherirRepository)
     {
         $postdata = json_decode($request->getContent());
         if (isset($postdata->Id))
@@ -41,7 +41,7 @@ class UserController extends AbstractController
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
         $enchere = $enchereRepository->findOneBy(['id' => $postdata->Id]);
-        $var = $enchereRepository->findGagnantEnchere($enchere);
+        $var = $encherirRepository->findGagnantEnchere($enchere);
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
