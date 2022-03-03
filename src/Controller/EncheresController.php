@@ -54,12 +54,10 @@ class EncheresController extends AbstractController
     public function Getencheres(Request $request, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
-        if (isset($postdata->Id))
-        {
-        $id = $postdata->Id;
-        }
-        else{
-        $id = null;
+        if (isset($postdata->Id)) {
+            $id = $postdata->Id;
+        } else {
+            $id = null;
         }
         $encoder = new JsonEncoder();
         $defaultContext = [
@@ -125,3 +123,5 @@ class EncheresController extends AbstractController
         return $response;
     }
 }
+
+//test push
