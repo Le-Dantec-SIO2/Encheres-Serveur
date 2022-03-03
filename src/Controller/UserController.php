@@ -88,6 +88,7 @@ class UserController extends AbstractController
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
         $var = $userRepository->findUserByEmail($mail);
+        dd($var);
         if($var['password'] == $pass){
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
