@@ -110,7 +110,7 @@ class EnchereRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-         public function findEnchere($enchereId = false): ?Enchere
+         public function findEnchere($enchereId = false)
     {
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
