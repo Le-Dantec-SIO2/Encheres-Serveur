@@ -77,11 +77,18 @@ class EncheresController extends AbstractController
         return $response;
     }
 
+
     /**
-     * @Route("/api/getEncheresEnCours/{enchereId}",defaults={"enchereId"=0}, name="GetEncheresEnCoursuwu")
+     * @Route("/api/getEncheresEnCours", name="GetEncheresEnCoursuwu")
      */
-    public function GetEncheresEnCours($enchereId, Request $request, EnchereRepository $enchereRepository)
+    public function GetEncheresEnCours(Request $request, EnchereRepository $enchereRepository)
     {
+        $postdata = json_decode($request->getContent());
+        if (isset($postdata->Id)) {
+            $enchereId = $postdata->Id;
+        } else {
+            $enchereId = null;
+        }
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -92,7 +99,10 @@ class EncheresController extends AbstractController
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
         //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
-        $var = 0 == $enchereId ? $enchereRepository->findEncheresEnCours() : $enchereRepository->findEncheresEnCours($enchereId);
+        $var = $enchereRepository->findEncheresEnCours($enchereId);
+        if (empty($var)) {
+            $var = $enchereRepository->findEncheresAll();
+        }
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -101,10 +111,16 @@ class EncheresController extends AbstractController
     }
 
     /**
-     * @Route("/api/getEncheresParticipes/{userId}", name="GetEncheresParticipes")
+     * @Route("/api/getEncheresParticipes", name="GetEncheresParticipes")
      */
     public function GetEncheresParticipes($userId, Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
     {
+        $postdata = json_decode($request->getContent());
+        if (isset($postdata->Id)) {
+            $userId = $postdata->Id;
+        } else {
+            $userId = null;
+        }
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -114,8 +130,11 @@ class EncheresController extends AbstractController
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $leuser = $userRepository->findOneBy(['id' => $userId]);
-        $var = $enchereRepository->findEncheresParticipes($leuser);
+        $user = $userRepository->findOneBy(['id' => $userId]);
+        $var = $enchereRepository->findEncheresParticipes($user);
+        if (empty($var)) {
+            $var = $enchereRepository->findEncheresAll();
+        }
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -123,5 +142,3 @@ class EncheresController extends AbstractController
         return $response;
     }
 }
-
-//test push
