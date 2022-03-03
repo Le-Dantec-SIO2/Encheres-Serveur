@@ -67,10 +67,10 @@ class UserController extends AbstractController
     /**
      * @Route("/api/connect/",name="connect")
      */
-    public function ConnectUser(Request $request, UserRepository $userRepository)
+    public function ConnectionUser(Request $request, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
-        dd($request);
+        dd($postdata);
         $encoder = new JsonEncoder();
         $defaultContext = [
     AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
