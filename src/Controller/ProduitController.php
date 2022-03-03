@@ -39,7 +39,7 @@ class ProduitController extends AbstractController
 
     }
     /** 
-     * @Route("/api/getProduitById/", name="getProduitById")
+     * @Route("/api/getProduitById", name="getProduitById")
     */
     public function GetProduitById($produitId,Request $request, ProduitRepository $produitRepository){
         $postdata = json_decode($request->getContent());
