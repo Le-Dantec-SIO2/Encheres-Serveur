@@ -70,7 +70,7 @@ class UserController extends AbstractController
     public function Connect(Request $request, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
-        dd($postdata);
+        dd($request);
         $encoder = new JsonEncoder();
         $defaultContext = [
     AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
