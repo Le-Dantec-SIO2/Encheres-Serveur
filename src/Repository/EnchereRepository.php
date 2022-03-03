@@ -100,6 +100,9 @@ class EnchereRepository extends ServiceEntityRepository
     public function findEncheresAll()
     {
         return $this->createQueryBuilder('e')
+            ->innerJoin('e.leproduit', 'p')
+            ->innerJoin('e.letypeenchere', 't')
+            ->innerJoin('en.leuser', 'u')
             ->andWhere('u.id = :userID')
             ->orderBy('e.datedebut', 'ASC')
             ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id, p.id AS produit_id")
