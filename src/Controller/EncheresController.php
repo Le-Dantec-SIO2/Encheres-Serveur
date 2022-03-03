@@ -113,7 +113,7 @@ class EncheresController extends AbstractController
     /**
      * @Route("/api/getEncheresParticipes", name="GetEncheresParticipes")
      */
-    public function GetEncheresParticipes($userId, Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
+    public function GetEncheresParticipes(Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
         if (isset($postdata->Id)) {
