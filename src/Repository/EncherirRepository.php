@@ -21,7 +21,7 @@ class EncherirRepository extends ServiceEntityRepository
         parent::__construct($registry, Encherir::class);
     }
 
-    public function findGagnantEnchere(Enchere $enchere){
+    public function findGagnantEnchere(Enchere $enchere =null){
         if($enchere->getDatefin()< new \DateTime('now')){
         $maxDate = $this->createQueryBuilder('en')
             ->andWhere('en.laenchere = :laenchere')
