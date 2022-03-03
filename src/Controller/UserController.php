@@ -19,10 +19,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/api/getGagnant/{enchereId}", name="getGagnant")
+     * @Route("/api/getGagnant", name="getGagnant")
      */
     public function GetGagnantEnchere(Request $request, UserRepository $userRepository, EnchereRepository $enchereRepository, EncherirRepository $encherirRepository, $enchereId)
     {
+        $postdata = json_decode($request->getContent());
+        if (isset($postdata->Id)) 
+            $id = $postdata->Id;
+        else 
+            {
+                $response = new Response('MISSING_ARGUMENTS_PARAMETERS');
+                $response->headers->set('Content-Type', 'text/html');
+                return $response;
+            }
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -32,7 +41,7 @@ class UserController extends AbstractController
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $enchere = $enchereRepository->findOneBy(['id' => $enchereId]);
+        $enchere = $enchereRepository->findOneBy(['id' => $postdata->Id]);
         $var = $encherirRepository->findGagnantEnchere($enchere);
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
