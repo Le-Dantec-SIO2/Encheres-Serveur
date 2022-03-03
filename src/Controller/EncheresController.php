@@ -15,6 +15,8 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
+use function PHPUnit\Framework\isNull;
+
 class EncheresController extends AbstractController
 {
     /**
@@ -99,10 +101,7 @@ class EncheresController extends AbstractController
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
         //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
-        $var = $enchereRepository->findEncheresEnCours($enchereId);
-        if (empty($var)) {
-            $var = $enchereRepository->findEncheresAll();
-        }
+        $var = isNull($enchereId) ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresEnCours($enchereId);
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -130,10 +129,8 @@ class EncheresController extends AbstractController
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $var = $enchereRepository->findEncheresParticipes($userId);
-        if (empty($var)) {
-            $var = $enchereRepository->findEncheresAll();
-        }
+        $var = isNull($userId) ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresParticipes($userId);
+        // $var = [IF] ? [THEN] : [ELSE]
         $data = $serializer->serialize($var, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');

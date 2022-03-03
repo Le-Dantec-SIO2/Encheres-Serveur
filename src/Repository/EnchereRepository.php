@@ -82,7 +82,7 @@ class EnchereRepository extends ServiceEntityRepository
         }
     }
 
-    public function findEncheresParticipes(int $userId)
+    public function findEncheresParticipes($userId)
     {
         return $this->createQueryBuilder('e')
             ->innerJoin('e.leproduit', 'p')
