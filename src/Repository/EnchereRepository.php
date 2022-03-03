@@ -127,28 +127,7 @@ class EnchereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-    public function findGagnantEnchere(Enchere $enchere)
-    {
-        if ($enchere->getDatefin() < new \DateTime('now')) {
-            $maxDate = $this->createQueryBuilder('en')
-                ->andWhere('en.laenchere = :laenchere')
-                ->setParameter(':laenchere', $enchere)
-                ->select('MAX(en.dateenchere)')
-                ->getQuery()
-                ->getResult();
-            return $this->createQueryBuilder('en')
-                ->innerJoin('en.leuser', 'u')
-                ->andwhere('en.laenchere = :laenchere')
-                ->andWhere('en.dateenchere = :ladatemax')
-                ->setParameter(':laenchere', $enchere)
-                ->setParameter(':ladatemax', $maxDate)
-                ->select('u.pseudo', 'u.photo')
-                ->getQuery()
-                ->getResult();
-        } else {
-            return null;
-        }
-    }
+
     /*
     public function findOneBySomeField($value): ?Enchere
     {
