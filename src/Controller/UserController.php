@@ -70,13 +70,6 @@ class UserController extends AbstractController
     public function Connect(Request $request, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
-        if (isset($postdata->Email) && isset($postdata->Password)) {
-            $mail = $postdata->Email;
-            $pass = $postdata->Password;
-        } else {
-            $mail = null;
-            $pass = null;
-        }
         dd($postdata);
         $encoder = new JsonEncoder();
         $defaultContext = [
@@ -88,16 +81,17 @@ class UserController extends AbstractController
 
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $var = $userRepository->findUserByEmail($mail);
-        if(1){
-        $data = $serializer->serialize($var, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        }else{
-            $data = "Mauvais identifiants";
-            $response = new Response($data, 401);
-            $response->headers->set('Content-Type', 'application/json');
-        }
+        $response = new Response();
+        // $var = $userRepository->findUserByEmail($mail);
+        // if(1){
+        // $data = $serializer->serialize($var, 'json');
+        // $response = new Response($data);
+        // $response->headers->set('Content-Type', 'application/json');
+        // }else{
+        //     $data = "Mauvais identifiants";
+        //     $response = new Response($data, 401);
+        //     $response->headers->set('Content-Type', 'application/json');
+        // }
         return $response;
 
     }
