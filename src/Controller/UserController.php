@@ -77,7 +77,7 @@ class UserController extends AbstractController
             $mail = null;
             $pass = null;
         }
-        dump($mail);
+        dd($mail);
         $encoder = new JsonEncoder();
         $defaultContext = [
     AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
