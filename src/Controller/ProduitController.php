@@ -38,7 +38,32 @@ class ProduitController extends AbstractController
         return $response;
 
     }
+    /** 
+     * @Route("/api/getProduitById/", name="getProduitById")
+    */
+    public function GetProduitById($produitId,Request $request, ProduitRepository $produitRepository){
+        $postdata = json_decode($request->getContent());
+        if (isset($postdata->Id)) {
+            $id = $postdata->Id;
+        } else {
+            $id = null;
+        }
+        $encoder = new JsonEncoder();
+        $defaultContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getId();
+            },
+        ];
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+        $serializer = new Serializer([$normalizer], [$encoder]);
+        $data = $request->getContent();
+        $var =$produitRepository->findProduits($produitId);
+        $data =  $serializer->serialize($var, 'json');
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
 
+        return $response;
+    }
     /**
      * @Route("/api/postProduit", name="postProduit")
      */
