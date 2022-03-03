@@ -21,7 +21,7 @@ class UserController extends AbstractController
     /**
      * @Route("/api/getGagnant", name="getGagnant")
      */
-    public function GetGagnantEnchere(Request $request, UserRepository $userRepository, EnchereRepository $enchereRepository, EncherirRepository $encherirRepository, $enchereId)
+    public function getGagnant(Request $request, UserRepository $userRepository, EnchereRepository $enchereRepository, EncherirRepository $encherirRepository, $enchereId)
     {
         $postdata = json_decode($request->getContent());
         if (isset($postdata->Id)) 

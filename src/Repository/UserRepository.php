@@ -3,11 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Enchere;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -74,7 +75,28 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
-    
+    public function findGagnantEnchere(Enchere $enchere){
+        if($enchere->getDatefin()< new \DateTime('now')){
+        $maxDate = $this->createQueryBuilder('en')
+            ->andWhere('en.laenchere = :laenchere')
+            ->setParameter(':laenchere',$enchere)
+            ->select('MAX(en.dateenchere)')
+            ->getQuery()
+            ->getResult();
+        return $this->createQueryBuilder('en')
+            ->innerJoin('en.leuser','u')
+            ->andwhere('en.laenchere = :laenchere')
+            ->andWhere('en.dateenchere = :ladatemax')
+            ->setParameter(':laenchere',$enchere)
+            ->setParameter(':ladatemax',$maxDate)
+            ->select('u.pseudo','u.photo')
+            ->getQuery()
+            ->getResult();
+        }
+        else{
+            return null;
+        }
+    }
 
     
 
