@@ -130,8 +130,7 @@ class EncheresController extends AbstractController
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer([$normalizer], [$encoder]);
         $data = $request->getContent();
-        $user = $userRepository->findOneBy(['id' => $userId]);
-        $var = $enchereRepository->findEncheresParticipes($user);
+        $var = $enchereRepository->findEncheresParticipes($userId);
         if (empty($var)) {
             $var = $enchereRepository->findEncheresAll();
         }
