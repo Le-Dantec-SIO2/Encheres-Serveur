@@ -8,15 +8,11 @@ use Doctrine\ORM\EntityManager;
 use App\Repository\UserRepository;
 use App\Repository\EnchereRepository;
 use function PHPUnit\Framework\isNull;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class EncheresController extends AbstractController
 {
@@ -96,8 +92,7 @@ class EncheresController extends AbstractController
         } else {
             $userId = null;
         }
-        $var = isNull($userId) ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresParticipes($userId);
-        // $var = [IF] ? [THEN] : [ELSE]
+        $var = IsNull($userId) ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresParticipes($userId);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
