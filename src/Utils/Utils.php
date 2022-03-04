@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
-trait Utils{
+class Utils{
 
     public function GetJsonResponse(Request $request, $var){
         $encoder = new JsonEncoder();
