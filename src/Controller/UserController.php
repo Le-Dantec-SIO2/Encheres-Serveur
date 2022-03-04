@@ -33,22 +33,10 @@ class UserController extends AbstractController
             $response->headers->set('Content-Type', 'text/html');
             return $response;
         }
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $data = $request->getContent();
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
         $var = $encherirRepository->findGagnantEnchere($enchere);
-        $data = $serializer->serialize($var, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
     }
 
     /**
@@ -72,8 +60,8 @@ class UserController extends AbstractController
             return $response;
         }
         $var = $userRepository->findUserByEmailAndPass(['email' => $email],['password' => $password]);
-        $test = new Utils;
-        return $test->GetJsonResponse($request, $var);
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
     }
 
     /**

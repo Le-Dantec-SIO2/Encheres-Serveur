@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Utils\Utils;
 use App\Entity\Produit;
 use App\Repository\ProduitRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +14,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
 
 
 class ProduitController extends AbstractController
@@ -29,21 +30,9 @@ class ProduitController extends AbstractController
         } else {
             $id = null;
         }
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $data = $request->getContent();
         $var = $produitRepository->findProduits($id);
-        $data =  $serializer->serialize($var, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
     }
     /**
      * @Route("/api/postProduit", name="postProduit")

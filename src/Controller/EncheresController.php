@@ -2,20 +2,21 @@
 
 namespace App\Controller;
 
+use App\Utils\Utils;
 use App\Entity\Encherir;
-use App\Repository\EnchereRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\UserRepository;
+use App\Repository\EnchereRepository;
+use function PHPUnit\Framework\isNull;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
-use function PHPUnit\Framework\isNull;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EncheresController extends AbstractController
 {
@@ -61,22 +62,9 @@ class EncheresController extends AbstractController
         } else {
             $id = null;
         }
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $data = $request->getContent();
         $var = $enchereRepository->findEncheres($id);
-        $data = $serializer->serialize($var, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
     }
 
 
@@ -91,22 +79,10 @@ class EncheresController extends AbstractController
         } else {
             $enchereId = null;
         }
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $data = $request->getContent();
         //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
         $var = isNull($enchereId) ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresEnCours($enchereId);
-        $data = $serializer->serialize($var, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
     }
 
     /**
@@ -120,22 +96,10 @@ class EncheresController extends AbstractController
         } else {
             $userId = null;
         }
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $data = $request->getContent();
         $var = isNull($userId) ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresParticipes($userId);
         // $var = [IF] ? [THEN] : [ELSE]
-        $data = $serializer->serialize($var, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
     }
 
     /**
@@ -144,22 +108,8 @@ class EncheresController extends AbstractController
     public function GetenchereTest(Request $request, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
-
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $data = $request->getContent();
         $var = $enchereRepository->findEnchere($postdata->Id);
-        $data = $serializer->serialize($var, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
     }
 }
