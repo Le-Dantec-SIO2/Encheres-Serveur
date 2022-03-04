@@ -6,7 +6,9 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\EnchereRepository;
 use App\Repository\EncherirRepository;
+use App\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
+use Monolog\Handler\Curl\Util;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,64 +60,20 @@ class UserController extends AbstractController
         if (isset($postdata->email)) {
             $email = $postdata->email;
         } else {
-            $response = new Response('MISSING_ARGUMENT_EMAIL');
+            $response = new Response('MISSING_ARGUMENT_EMAIL',400);
             $response->headers->set('Content-Type', 'text/html');
             return $response;
         }
         if (isset($postdata->password)) {
             $password = $postdata->password;
         } else {
-            $response = new Response('MISSING_ARGUMENT_PASSWORD');
+            $response = new Response('MISSING_ARGUMENT_PASSWORD',400);
             $response->headers->set('Content-Type', 'text/html');
             return $response;
         }
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $data = $request->getContent();
         $var = $userRepository->findUserByEmailAndPass(['email' => $email],['password' => $password]);
-        $data = $serializer->serialize($var, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-    }
-
-    /**
-     * @Route("/api/connect/",name="connect")
-     */
-    public function Bidule(Request $request, UserRepository $userRepository)
-    {
-        $postdata = json_decode($request->getContent());
-        dd($postdata);
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $data = $request->getContent();
-        $response = new Response();
-        // $var = $userRepository->findUserByEmailAndPass($mail);
-        // if(1){
-        // $data = $serializer->serialize($var, 'json');
-        // $response = new Response($data);
-        // $response->headers->set('Content-Type', 'application/json');
-        // }else{
-        //     $data = "Mauvais identifiants";
-        //     $response = new Response($data, 401);
-        //     $response->headers->set('Content-Type', 'application/json');
-        // }
-        return $response;
+        $test = new Utils;
+        return $test->GetJsonResponse($request, $var);
     }
 
     /**
