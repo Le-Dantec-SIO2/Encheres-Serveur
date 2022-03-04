@@ -17,6 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class EncheresController extends AbstractController
 {
     /**
+     * Permet d'encherir sur une enchère
+     * Retourne une réponse http
      * @Route("/api/EncherirPost", name="EncherirPost")
      */
     public function EncherirPost(Request $request, UserRepository $userRepository, EntityManager $em)
