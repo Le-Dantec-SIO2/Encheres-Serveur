@@ -27,29 +27,17 @@ class EnchereRepository extends ServiceEntityRepository
     {
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
-        if ($enchereId) {
-            return $this->createQueryBuilder('e')
-                ->innerjoin('e.leproduit', 'p')
-                ->innerJoin('e.letypeenchere', 't')
-                ->andWhere('e.datefin > :ladate')
-                ->andWhere('e.id = :enchereId')
-                ->setParameter(':enchereId', $enchereId)
-                ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate', $ladate)
-                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
-                ->getQuery()
-                ->getResult();
-        } else {
-            return $this->createQueryBuilder('e')
-                ->innerjoin('e.leproduit', 'p')
-                ->innerJoin('e.letypeenchere', 't')
-                ->andWhere('e.datedebut > :ladate')
-                ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate', $ladate)
-                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
-                ->getQuery()
-                ->getResult();
-        }
+        return $this->createQueryBuilder('e')
+            ->innerjoin('e.leproduit', 'p')
+            ->innerJoin('e.letypeenchere', 't')
+            ->andWhere('e.datefin > :ladate')
+            ->andWhere('e.id = :enchereId')
+            ->setParameter(':enchereId', $enchereId)
+            ->orderBy('e.datedebut', 'ASC')
+            ->setParameter('ladate', $ladate)
+            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
+            ->getQuery()
+            ->getResult();
     }
 
     public function findEncheresEnCours($enchereId = false)
