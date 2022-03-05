@@ -41,6 +41,7 @@ class EnchereRepository extends ServiceEntityRepository
             ->setParameter(':enchereId', $enchereId);
         $query->getQuery()
             ->getResult();
+        return $query;
     }
 
     public function findEncheresEnCours($enchereId = false)
