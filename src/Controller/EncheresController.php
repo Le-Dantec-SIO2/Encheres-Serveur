@@ -55,7 +55,7 @@ class EncheresController extends AbstractController
     public function Getencheres(Request $request, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
-        $id = $postdata->Id;
+        $id = isset($postdata->Id) ? $postdata->Id : null;
         $var = $enchereRepository->findEncheres($id);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
