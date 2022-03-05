@@ -23,11 +23,26 @@ class EnchereRepository extends ServiceEntityRepository
     //  * @return Enchere[] Returns an array of Enchere objects
     //  */
 
-    public function findEncheres($enchereId = false)
+    public function findEncheres()
     {
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
         $query = $this->createQueryBuilder('e')
+            ->innerjoin('e.leproduit', 'p')
+            ->innerJoin('e.letypeenchere', 't')
+            ->andWhere('e.datefin > :ladate')
+            ->orderBy('e.datedebut', 'ASC')
+            ->setParameter('ladate', $ladate)
+            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
+            ->getQuery()
+            ->getResult();
+    }
+        public function findEnchere($enchereId)
+    {
+        $ladate = new \DateTime('now');
+        $ladate = $ladate->format('Y-m-d');
+
+        return $this->createQueryBuilder('e')
             ->innerjoin('e.leproduit', 'p')
             ->innerJoin('e.letypeenchere', 't')
             ->andWhere('e.datefin > :ladate')
@@ -36,15 +51,26 @@ class EnchereRepository extends ServiceEntityRepository
             ->orderBy('e.datedebut', 'ASC')
             ->setParameter('ladate', $ladate)
             ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
-            ;
-        if($enchereId) $query->andWhere('e.id = :enchereId')
-            ->setParameter(':enchereId', $enchereId);
-        $query->getQuery()
-            ->getResult();
-        return $query;
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
-    public function findEncheresEnCours($enchereId = false)
+    public function findEncheresEnCours()
+    {
+        $ladate = new \DateTime('now');
+        $ladate = $ladate->format('Y-m-d');
+        return $this->createQueryBuilder('e')
+            ->innerjoin('e.leproduit', 'p')
+            ->innerJoin('e.letypeenchere', 't')
+            ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
+            ->orderBy('e.datedebut', 'ASC')
+            ->setParameter('ladate', $ladate)
+            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findEnchereEnCours($enchereId)
     {
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
@@ -58,7 +84,7 @@ class EnchereRepository extends ServiceEntityRepository
             ->setParameter('ladate', $ladate)
             ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
     public function findEncheresParticipes($userId)
@@ -89,23 +115,7 @@ class EnchereRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEnchere($enchereId = false)
-    {
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
 
-        return $this->createQueryBuilder('e')
-            ->innerjoin('e.leproduit', 'p')
-            ->innerJoin('e.letypeenchere', 't')
-            ->andWhere('e.datefin > :ladate')
-            ->andWhere('e.id = :enchereId')
-            ->setParameter(':enchereId', $enchereId)
-            ->orderBy('e.datedebut', 'ASC')
-            ->setParameter('ladate', $ladate)
-            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 
     /*
     public function findOneBySomeField($value): ?Enchere
