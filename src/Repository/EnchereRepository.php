@@ -27,7 +27,7 @@ class EnchereRepository extends ServiceEntityRepository
     {
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
-        $query = $this->createQueryBuilder('e')
+        return $this->createQueryBuilder('e')
             ->innerjoin('e.leproduit', 'p')
             ->innerJoin('e.letypeenchere', 't')
             ->andWhere('e.datefin > :ladate')
