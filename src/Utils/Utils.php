@@ -19,8 +19,9 @@ class Utils{
                         return $object->getId();
                     },
                 ];
+                $dateNormalizer = new DateTimeNormalizer(array('datetime_format' => 'Y-m-d'))
                 $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-                $serializer = new Serializer(new DateTimeNormalizer(array('datetime_format' => 'd.m.Y')),[$normalizer], [$encoder]);
+                $serializer = new Serializer([$dateNormalizer],[$normalizer], [$encoder]);
                 $data = $request->getContent();
                 $data = $serializer->serialize($var, 'json',[AbstractNormalizer::IGNORED_ATTRIBUTES => $ignoredFields]);
                 $response = new Response($data);
