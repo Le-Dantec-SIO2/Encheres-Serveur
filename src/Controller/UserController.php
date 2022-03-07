@@ -8,6 +8,7 @@ use App\Repository\EnchereRepository;
 use App\Repository\EncherirRepository;
 use App\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
+use Monolog\Handler\Curl\Util;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,11 +24,9 @@ class UserController extends AbstractController
         $postdata = json_decode($request->getContent());
         if (isset($postdata->Id))
             $id = $postdata->Id;
-        else {
-            $response = new Response('MISSING_ARGUMENTS_PARAMETERS');
-            $response->headers->set('Content-Type', 'text/html');
-            return $response;
-        }
+        else 
+            Utils::ErrorMissingArguments();
+        
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
         $var = $encherirRepository->findGagnantEnchere($enchere);
         $response = new Utils;
@@ -40,20 +39,11 @@ class UserController extends AbstractController
     public function GetUserByMailAndPass(Request $request, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
-        if (isset($postdata->email)) {
+        if (isset($postdata->email)|| isset($postdata->password)) {
             $email = $postdata->email;
-        } else {
-            $response = new Response('MISSING_ARGUMENT_EMAIL',400);
-            $response->headers->set('Content-Type', 'text/html');
-            return $response;
-        }
-        if (isset($postdata->password)) {
             $password = $postdata->password;
-        } else {
-            $response = new Response('MISSING_ARGUMENT_PASSWORD',400);
-            $response->headers->set('Content-Type', 'text/html');
-            return $response;
-        }
+        } else 
+            Utils::ErrorMissingArguments();
         $var = $userRepository->findUserByEmailAndPass(['email' => $email],['password' => $password]);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);

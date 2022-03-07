@@ -27,5 +27,10 @@ class Utils{
 
                 return $response;
     }
+    public static function ErrorMissingArguments(){
+        $response = new Response('MISSING_ARGUMENTS_PARAMETERS',400);
+        $response->headers->set('Content-Type', 'text/html');
+        return $response;
+    }
 }
 ?>

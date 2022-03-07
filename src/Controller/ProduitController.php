@@ -21,11 +21,12 @@ class ProduitController extends AbstractController
     public function GetProduit(Request $request, ProduitRepository $produitRepository)
     {
         $postdata = json_decode($request->getContent());
-        if (isset($postdata->Id)) {
+        
+        if (isset($postdata->Id))
             $id = $postdata->Id;
-        } else {
+        else 
             $id = null;
-        }
+
         $var = $produitRepository->findProduits($id);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
