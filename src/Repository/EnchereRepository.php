@@ -58,22 +58,17 @@ class EnchereRepository extends ServiceEntityRepository
 
     }
 
-    public function findEncheresEnCours($IdTypeEnchere)
+    public function findEncheresEnCours()
     {
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
-             $this->createQueryBuilder('e')
+        return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
                 ->innerJoin('e.letypeenchere', 't')
                 ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
-
                 ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate', $ladate);
-                if($IdTypeEnchere != 0){
-                    $this->andWhere('t.id=:idtype')
-                        ->setParameter(':idtype', $IdTypeEnchere);
-                }
-                return $this->getQuery()
+                ->setParameter('ladate', $ladate)
+                ->getQuery()
                 ->getResult();
     }
     public function findEnchereEnCours($enchereId)
