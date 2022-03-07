@@ -53,6 +53,7 @@ class EncherirRepository extends ServiceEntityRepository
             ->setParameter(':enchere', $enchere)
             ->select('en.prixenchere')
             ->setFirstResult(0)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
