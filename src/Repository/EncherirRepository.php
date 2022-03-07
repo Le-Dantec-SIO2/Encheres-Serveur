@@ -7,6 +7,7 @@ use App\Entity\Encherir;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Mapping\Id;
 
 /**
  * @method Encherir|null find($id, $lockMode = null, $lockVersion = null)
@@ -42,6 +43,20 @@ class EncherirRepository extends ServiceEntityRepository
             return null;
         }
     }
+    // /**
+    //  * @return The actual price of the enchere given in parameters
+    //  */
+    public function findActualPrice($enchere){
+        return $this->createQueryBuilder('en') 
+            ->andWhere('en.lanchere = :enchere')
+            ->andWhere('en.id = MAX(en.id)')
+            ->setParameter(':enchere', $enchere)
+            ->orderBy('en.datedebut', 'ASC')
+            ->select('en.prixenchere')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
     // /**
     //  * @return Encherir[] Returns an array of Encherir objects
     //  */
