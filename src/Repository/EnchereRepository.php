@@ -85,7 +85,7 @@ class EnchereRepository extends ServiceEntityRepository
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate', $ladate)
                 ->getQuery()
-                ->getResult();
+                ->getOneOrNullResult();
     }
 
     public function findEncheresParticipes($userId)
