@@ -95,7 +95,7 @@ class EncherirController extends AbstractController
         $enchere = $enchereRepository->find($IdEnchere);
         $prixActuel = $encherirRepository->findActualPrice($enchere);
         //Si le type d'enchère est classique
-        if ($enchere->getLetypeenchere() == 1)
+        if ($enchere->getLetypeenchere()->getId() == 1)
             //Vérifie que l'offre saisie est supérieur au prix actuel * par le coefficient saisie (Classique)
             if (!$prixActuel * $coefficient < $prixoffre)
                 return "PRICE_TOO_LOW";
