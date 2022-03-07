@@ -6,7 +6,6 @@ use App\Utils\Utils;
 use App\Entity\Encherir;
 use App\Repository\UserRepository;
 use App\Repository\EnchereRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 use function PHPUnit\Framework\isNull;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,38 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EncheresController extends AbstractController
 {
-    /**
-     * Permet d'encherir sur une enchère
-     * Retourne une réponse http
-     * @Route("/api/EncherirPost", name="EncherirPost")
-     */
-    public function EncherirPost(Request $request, UserRepository $userRepository, EnchereRepository $enchereRepository,EntityManagerInterface $em)
-    {
-        //On récupère les données envoyés en post
-        $postdata = json_decode($request->getContent());
 
-        //On cherche l'utilisateur
-        $user = $userRepository->find($postdata->IdUser);
-
-        //On cherche l'enchère
-        $enchere = $enchereRepository->find($postdata->IdEnchere);
-
-        //On crée un objet encherir avec les valeurs trouvées
-        $encherir = new Encherir();
-        $encherir->setLeuser($user);
-        $encherir->setLaenchere($enchere);
-        $encherir->setPrixenchere($postdata->PrixEnchere);
-        $encherir->setDateenchere(new \DateTime('now'));
-
-        $em->persist($encherir);
-        $em->flush();
-
-        //On renvoie une réponse pour savoir si l'opération à réussie
-        $response = new Response('ok');
-        $response->headers->set('Content-Type', 'text/html');
-
-        return $response;
-    }
 
     /**
      * @Route("/api/getEnchere",name="Getenchere")
