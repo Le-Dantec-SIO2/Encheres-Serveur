@@ -21,7 +21,7 @@ class Utils{
                 $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
                 $serializer = new Serializer([$normalizer], [$encoder]);
                 $data = $request->getContent();
-                $data = $serializer->serialize($var, 'json');
+                $data = $serializer->serialize($var, 'json',[AbstractNormalizer::IGNORED_ATTRIBUTES => ['lesencheres']]);
                 $response = new Response($data);
                 $response->headers->set('Content-Type', 'application/json');
 
