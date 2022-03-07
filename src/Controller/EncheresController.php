@@ -4,9 +4,10 @@ namespace App\Controller;
 
 use App\Utils\Utils;
 use App\Entity\Encherir;
-use Doctrine\ORM\EntityManager;
 use App\Repository\UserRepository;
 use App\Repository\EnchereRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
 use function PHPUnit\Framework\isNull;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,7 @@ class EncheresController extends AbstractController
      * Retourne une réponse http
      * @Route("/api/EncherirPost", name="EncherirPost")
      */
-    public function EncherirPost(Request $request, UserRepository $userRepository, EntityManager $em)
+    public function EncherirPost(Request $request, UserRepository $userRepository, EnchereRepository $enchereRepository,EntityManagerInterface $em)
     {
         //On récupère les données envoyés en post
         $postdata = json_decode($request->getContent());
@@ -30,7 +31,7 @@ class EncheresController extends AbstractController
         $user = $userRepository->find($postdata->IdUser);
 
         //On cherche l'enchère
-        $enchere = $userRepository->find($postdata->IdEnchere);
+        $enchere = $enchereRepository->find($postdata->IdEnchere);
 
         //On crée un objet encherir avec les valeurs trouvées
         $encherir = new Encherir();
