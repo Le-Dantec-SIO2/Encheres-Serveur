@@ -20,7 +20,7 @@ class Utils{
                     },
                 ];
                 $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-                $dateNormalizer = new DateTimeNormalizer(array('datetime_format' => 'Y-m-d'));
+                $dateNormalizer = new DateTimeNormalizer(array('datetime_format' => 'Y-m-d H:i:s'));
 
                 $serializer = new Serializer([$dateNormalizer,$normalizer], [$encoder]);
                 $data = $request->getContent();
