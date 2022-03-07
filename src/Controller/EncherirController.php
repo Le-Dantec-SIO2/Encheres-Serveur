@@ -93,7 +93,7 @@ class EncherirController extends AbstractController
     {
         //On cherche l'enchère
         $enchere = $enchereRepository->find($IdEnchere);
-        $prixActuel = $encherirRepository->findActualPrice($enchere);
+        $prixActuel = $encherirRepository->findActualPrice($enchere)[0];
         dd($prixActuel);
         //Si le type d'enchère est classique
         if ($enchere->getLetypeenchere()->getId() == 1) {
