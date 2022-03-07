@@ -69,7 +69,7 @@ class EnchereRepository extends ServiceEntityRepository
 
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate', $ladate);
-                if($IdTypeEnchere != null){
+                if($IdTypeEnchere != 0){
                     $this->andWhere('t.id=:idtype')
                         ->setParameter(':idtype', $IdTypeEnchere);
                 }
