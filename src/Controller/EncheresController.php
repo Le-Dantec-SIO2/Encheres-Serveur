@@ -99,4 +99,15 @@ class EncheresController extends AbstractController
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
+
+    /**
+     * @Route("/api/getEnchereTestObjet",name="GetencheretestObjet")
+     */
+    public function GetenchereTestObjet(Request $request, EnchereRepository $enchereRepository)
+    {
+        $postdata = json_decode($request->getContent());
+        $var = $enchereRepository->findEnchereTestObjet($postdata->Id);
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
+    }
 }
