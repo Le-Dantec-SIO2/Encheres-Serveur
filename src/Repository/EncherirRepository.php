@@ -49,6 +49,8 @@ class EncherirRepository extends ServiceEntityRepository
     public function findActualPrice($enchere){
         return $this->createQueryBuilder('en') 
             ->andWhere('en.laenchere = :enchere')
+            ->groupBy('en.id')
+            ->having('en.id = MAX(en.id)')
             ->setParameter(':enchere', $enchere)
             ->select('en.prixenchere')
             ->getQuery()
