@@ -29,7 +29,8 @@ class ProduitController extends AbstractController
 
         $var = $produitRepository->findProduits($id);
         $response = new Utils;
-        return $response->GetJsonResponse($request, $var);
+        $ignoredFields = ['lesmagasins','lesencheres'];
+        return $response->GetJsonResponse($request, $var, $ignoredFields);
     }
     /**
      * @Route("/api/postProduit", name="postProduit")

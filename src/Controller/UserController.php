@@ -30,7 +30,8 @@ class UserController extends AbstractController
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
         $var = $encherirRepository->findGagnantEnchere($enchere);
         $response = new Utils;
-        return $response->GetJsonResponse($request, $var);
+        $ignoredFields = ['lesencherirs'];
+        return $response->GetJsonResponse($request, $var, $ignoredFields);
     }
 
     /**
@@ -46,7 +47,8 @@ class UserController extends AbstractController
             Utils::ErrorMissingArguments();
         $var = $userRepository->findUserByEmailAndPass(['email' => $email],['password' => $password]);
         $response = new Utils;
-        return $response->GetJsonResponse($request, $var);
+        $ignoredFields = ['lesencherirs'];
+        return $response->GetJsonResponse($request, $var, $ignoredFields);
     }
 
     /**

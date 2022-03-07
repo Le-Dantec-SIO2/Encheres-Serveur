@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 class Utils{
 
-    public function GetJsonResponse(Request $request, $var){
+    public function GetJsonResponse(Request $request, $var, $ignoredFields){
         $encoder = new JsonEncoder();
                 $defaultContext = [
                     AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -21,7 +21,7 @@ class Utils{
                 $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
                 $serializer = new Serializer([$normalizer], [$encoder]);
                 $data = $request->getContent();
-                $data = $serializer->serialize($var, 'json',[AbstractNormalizer::IGNORED_ATTRIBUTES => ['lesencheres']]);
+                $data = $serializer->serialize($var, 'json',[AbstractNormalizer::IGNORED_ATTRIBUTES => $ignoredFields]);
                 $response = new Response($data);
                 $response->headers->set('Content-Type', 'application/json');
 
