@@ -6,6 +6,7 @@ use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=ProduitRepository::class)
@@ -36,11 +37,13 @@ class Produit
 
     /**
      * @ORM\ManyToMany(targetEntity=Magasin::class, mappedBy="lesproduits")
+     * @Ignore()
      */
     private $lesmagasins;
 
     /**
      * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="leproduit")
+     * @Ignore()
      */
     private $lesencheres;
 

@@ -29,11 +29,13 @@ class Encherir
 
     /**
      * @ORM\ManyToOne(targetEntity=Enchere::class, inversedBy="lesencherirs")
+     * 
      */
     private $laenchere;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="lesencherirs")
+     *
      */
     private $leuser;
 
