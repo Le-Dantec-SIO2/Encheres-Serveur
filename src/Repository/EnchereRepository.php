@@ -137,6 +137,7 @@ class EnchereRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
                 ->innerJoin('e.letypeenchere','t')
+                ->addSelect('t')
                 ->andWhere('e.datefin > :ladate')
                 ->andWhere('e.id = :enchereId')
                 ->setParameter(':enchereId',$enchereId)
