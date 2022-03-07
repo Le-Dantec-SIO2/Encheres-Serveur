@@ -48,7 +48,7 @@ class EncherirRepository extends ServiceEntityRepository
     //  */
     public function findActualPrice($enchere){
         return $this->createQueryBuilder('en') 
-            ->innerJoin('e.leuser', 'u')
+            ->innerJoin('en.leuser', 'u')
             ->andWhere('en.laenchere = :enchere')
             ->orderBy('en.id','DESC')
             ->setParameter(':enchere', $enchere)
@@ -59,7 +59,7 @@ class EncherirRepository extends ServiceEntityRepository
     }
     public function findLastFiveOffer($enchere){
         return $this->createQueryBuilder('en') 
-        ->innerJoin('e.leuser', 'u')
+        ->innerJoin('en.leuser', 'u')
         ->andWhere('en.laenchere = :enchere')
         ->orderBy('en.id','DESC')
         ->setParameter(':enchere', $enchere)
