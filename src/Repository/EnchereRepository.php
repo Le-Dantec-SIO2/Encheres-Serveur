@@ -35,7 +35,7 @@ class EnchereRepository extends ServiceEntityRepository
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
                 ->getQuery()
-                ->getOneOrNullResult()
+                ->getResult()
             ;
 
     }
