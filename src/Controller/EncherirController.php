@@ -88,17 +88,18 @@ class EncherirController extends AbstractController
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
-    
+
     public static function PriceAuthorize($IdEnchere, $prixoffre, $coefficient, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
     {
         //On cherche l'enchère
         $enchere = $enchereRepository->find($IdEnchere);
         $prixActuel = $encherirRepository->findActualPrice($enchere);
         //Si le type d'enchère est classique
-        if ($enchere->getLetypeenchere()->getId() == 1)
+        if ($enchere->getLetypeenchere()->getId() == 1) {
             //Vérifie que l'offre saisie est supérieur au prix actuel * par le coefficient saisie (Classique)
-            if (!$prixActuel * $coefficient < $prixoffre)
+            if ($prixActuel * $coefficient < $prixoffre)
                 return "PRICE_TOO_LOW";
+        }
         //Vérifie que l'offre saisie est inférieur au prix actuel * par le coefficient saisie (Inverser)
         if ($prixActuel * $coefficient > $prixoffre)
             return "PRICE_TOO_HIGH";
