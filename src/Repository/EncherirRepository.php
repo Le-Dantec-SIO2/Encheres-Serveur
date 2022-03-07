@@ -51,7 +51,7 @@ class EncherirRepository extends ServiceEntityRepository
             ->andWhere('en.laenchere = :enchere')
             ->orderBy('en.id','DESC')
             ->setParameter(':enchere', $enchere)
-            ->select('en.prixenchere','en.leuser')
+            ->select('en.prixenchere','en.leuser_id')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
@@ -61,7 +61,7 @@ class EncherirRepository extends ServiceEntityRepository
         ->andWhere('en.laenchere = :enchere')
         ->orderBy('en.id','DESC')
         ->setParameter(':enchere', $enchere)
-        ->select('en.prixenchere','en.leuser')
+        ->select('en.prixenchere','en.leuser_id')
         ->setFirstResult(1)
         ->setMaxResults(6)
         ->getQuery()
