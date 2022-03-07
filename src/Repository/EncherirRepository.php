@@ -51,13 +51,22 @@ class EncherirRepository extends ServiceEntityRepository
             ->andWhere('en.laenchere = :enchere')
             ->orderBy('en.id','DESC')
             ->setParameter(':enchere', $enchere)
-            ->select('en.prixenchere')
-            ->setFirstResult(0)
+            ->select('en.prixenchere','en.leuser_id')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
-    
+    public function findLastEnchere($enchere){
+        return $this->createQueryBuilder('en') 
+        ->andWhere('en.laenchere = :enchere')
+        ->orderBy('en.id','DESC')
+        ->setParameter(':enchere', $enchere)
+        ->select('en.prixenchere','en.leuser_id')
+        ->setFirstResult(1)
+        ->setMaxResults(6)
+        ->getQuery()
+        ->getResult();
+    }
     // /**
     //  * @return Encherir[] Returns an array of Encherir objects
     //  */
