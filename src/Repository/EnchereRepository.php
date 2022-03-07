@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Enchere;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -23,68 +24,62 @@ class EnchereRepository extends ServiceEntityRepository
     //  * @return Enchere[] Returns an array of Enchere objects
     //  */
 
-    public function findEncheres()
+    public function findEncheres($enchereId = false)
     {
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
-        return $this->createQueryBuilder('e')
-            ->innerjoin('e.leproduit', 'p')
-            ->innerJoin('e.letypeenchere', 't')
-            ->andWhere('e.datefin > :ladate')
-            ->orderBy('e.datedebut', 'ASC')
-            ->setParameter('ladate', $ladate)
-            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
-            ->getQuery()
-            ->getResult();
-    }
-        public function findEnchere($enchereId)
-    {
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
-
-        return $this->createQueryBuilder('e')
-            ->innerjoin('e.leproduit', 'p')
-            ->innerJoin('e.letypeenchere', 't')
-            ->andWhere('e.datefin > :ladate')
-            ->andWhere('e.id = :enchereId')
-            ->setParameter(':enchereId', $enchereId)
-            ->orderBy('e.datedebut', 'ASC')
-            ->setParameter('ladate', $ladate)
-            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
-            ->getQuery()
-            ->getOneOrNullResult();
+        if ($enchereId) {
+            return $this->createQueryBuilder('e')
+                ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere', 't')
+                ->andWhere('e.datefin > :ladate')
+                ->andWhere('e.id = :enchereId')
+                ->setParameter(':enchereId', $enchereId)
+                ->orderBy('e.datedebut', 'ASC')
+                ->setParameter('ladate', $ladate)
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
+                ->getQuery()
+                ->getResult();
+        } else {
+            return $this->createQueryBuilder('e')
+                ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere', 't')
+                ->andWhere('e.datedebut > :ladate')
+                ->orderBy('e.datedebut', 'ASC')
+                ->setParameter('ladate', $ladate)
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
+                ->getQuery()
+                ->getResult();
+        }
     }
 
-    public function findEncheresEnCours()
+    public function findEncheresEnCours($enchereId = false)
     {
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
-        return $this->createQueryBuilder('e')
-            ->innerjoin('e.leproduit', 'p')
-            ->innerJoin('e.letypeenchere', 't')
-            ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
-            ->orderBy('e.datedebut', 'ASC')
-            ->setParameter('ladate', $ladate)
-            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findEnchereEnCours($enchereId)
-    {
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
-        return $this->createQueryBuilder('e')
-            ->innerjoin('e.leproduit', 'p')
-            ->innerJoin('e.letypeenchere', 't')
-            ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
-            ->andWhere('e.id = :enchereId')
-            ->setParameter(':enchereId', $enchereId)
-            ->orderBy('e.datedebut', 'ASC')
-            ->setParameter('ladate', $ladate)
-            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
-            ->getQuery()
-            ->getOneOrNullResult();
+        if ($enchereId) {
+            return $this->createQueryBuilder('e')
+                ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere', 't')
+                ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
+                ->andWhere('e.id = :enchereId')
+                ->setParameter(':enchereId', $enchereId)
+                ->orderBy('e.datedebut', 'ASC')
+                ->setParameter('ladate', $ladate)
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
+                ->getQuery()
+                ->getResult();
+        } else {
+            return $this->createQueryBuilder('e')
+                ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere', 't')
+                ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
+                ->orderBy('e.datedebut', 'ASC')
+                ->setParameter('ladate', $ladate)
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")
+                ->getQuery()
+                ->getResult();
+        }
     }
 
     public function findEncheresParticipes($userId)
@@ -115,8 +110,43 @@ class EnchereRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+         public function findEnchere($enchereId = false)
+    {
+        $ladate = new \DateTime('now');
+        $ladate = $ladate->format('Y-m-d');
+        
+            return $this->createQueryBuilder('e')
+                ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere','t')
+                ->andWhere('e.datefin > :ladate')
+                ->andWhere('e.id = :enchereId')
+                ->setParameter(':enchereId',$enchereId)
+                ->orderBy('e.datedebut', 'ASC')
+                ->setParameter('ladate',$ladate)
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")            
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+            }
 
-
+                    public function findEnchereTestObjet($enchereId = false)
+    {
+        $ladate = new \DateTime('now');
+        $ladate = $ladate->format('Y-m-d');
+        
+            return $this->createQueryBuilder('e')
+                ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere','t')
+                ->andWhere('e.datefin > :ladate')
+                ->andWhere('e.id = :enchereId')
+                ->setParameter(':enchereId',$enchereId)
+                ->orderBy('e.datedebut', 'ASC')
+                ->setParameter('ladate',$ladate)
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id,t")            
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+            }
     /*
     public function findOneBySomeField($value): ?Enchere
     {
