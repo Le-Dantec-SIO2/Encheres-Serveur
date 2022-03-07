@@ -29,7 +29,7 @@ class EncherirController extends AbstractController
         return $response->GetJsonResponse($request, $var);
     }
     /**
-     * @Route("/api/getLastFiveOffer",name="GetLastFiveOffer")
+     * @Route("/api/getLastSixOffer",name="GetLastSixOffer")
      */
     public function GetLastSixOffer(Request $request,EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
     {
