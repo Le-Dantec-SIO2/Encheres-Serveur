@@ -42,6 +42,7 @@ class Enchere
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeEnchere::class, inversedBy="lesencheres")
+     * @Ignore()
      */
     private $letypeenchere;
 
