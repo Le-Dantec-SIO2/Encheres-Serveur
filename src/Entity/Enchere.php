@@ -114,12 +114,17 @@ class Enchere
 
         return $this;
     }
+       /**
+     * @Ignore()
+     */
 
     public function getLetypeenchere(): ?TypeEnchere
     {
         return $this->letypeenchere;
     }
-
+   /**
+     * @Ignore()
+     */
     public function setLetypeenchere(?TypeEnchere $letypeenchere): self
     {
         $this->letypeenchere = $letypeenchere;
@@ -129,6 +134,7 @@ class Enchere
 
     /**
      * @return Collection<int, Encherir>
+     * @Ignore()
      */
     public function getLesencherirs(): Collection
     {
