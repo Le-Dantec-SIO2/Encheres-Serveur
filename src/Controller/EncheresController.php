@@ -32,13 +32,14 @@ class EncheresController extends AbstractController
 
 
     /**
-     * @Route("/api/getEncheresEnCours", name="GetEncheresEnCoursuwu")
+     * @Route("/api/getEncheresEnCours", name="GetEncheresEnCours")
      */
     public function GetEncheresEnCours(Request $request, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
         //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
-        $var = isset($postdata -> Id) ? $enchereRepository->findEnchereEnCours($postdata->id) : $enchereRepository->findEncheresEnCours();
+        $var = isset($postdata -> Id) ? $enchereRepository->findEnchereEnCours($postdata->Id) : $enchereRepository->findEncheresEnCours($postdata->IdTypeEnchere);
+        
         $response = new Utils;
         $ignoredFields = ['lesencherirs','lesencheres'];
         return $response->GetJsonResponse($request, $var,$ignoredFields);
