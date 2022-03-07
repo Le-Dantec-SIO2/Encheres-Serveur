@@ -19,7 +19,7 @@ class Utils{
                     },
                 ];
                 $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-                $serializer = new Serializer([$normalizer], [$encoder]);
+                $serializer = new Serializer(new DateTimeNormalizer('d.m.Y'),[$normalizer], [$encoder]);
                 $data = $request->getContent();
                 $data = $serializer->serialize($var, 'json',[AbstractNormalizer::IGNORED_ATTRIBUTES => $ignoredFields]);
                 $response = new Response($data);
