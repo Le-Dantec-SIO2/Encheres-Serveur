@@ -22,7 +22,7 @@ class EncheresController extends AbstractController
      * Retourne une réponse http
      * @Route("/api/EncherirPost", name="EncherirPost")
      */
-    public function EncherirPost(Request $request, UserRepository $userRepository, EntityManagerInterface $em)
+    public function EncherirPost(Request $request, UserRepository $userRepository, EnchereRepository $enchereRepository,EntityManagerInterface $em)
     {
         //On récupère les données envoyés en post
         $postdata = json_decode($request->getContent());
@@ -31,7 +31,7 @@ class EncheresController extends AbstractController
         $user = $userRepository->find($postdata->IdUser);
 
         //On cherche l'enchère
-        $enchere = $userRepository->find($postdata->IdEnchere);
+        $enchere = $enchereRepository->find($postdata->IdEnchere);
 
         //On crée un objet encherir avec les valeurs trouvées
         $encherir = new Encherir();
