@@ -143,7 +143,7 @@ class EnchereRepository extends ServiceEntityRepository
                 ->setParameter(':enchereId',$enchereId)
                 ->orderBy('e.datedebut', 'ASC')
                 ->setParameter('ladate',$ladate)
-                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id")            
+                ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id,p.id AS produit_id,e.letypeenchere")            
                 
                 ->getQuery()
                 ->getOneOrNullResult()
