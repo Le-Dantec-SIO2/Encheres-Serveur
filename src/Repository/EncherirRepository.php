@@ -51,7 +51,6 @@ class EncherirRepository extends ServiceEntityRepository
             ->andWhere('en.laenchere = :enchere')
             ->andWhere('en.id = MAX(en.id)')
             ->setParameter(':enchere', $enchere)
-            ->orderBy('en.datedebut', 'ASC')
             ->select('en.prixenchere')
             ->getQuery()
             ->getOneOrNullResult();
