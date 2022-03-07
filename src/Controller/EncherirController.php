@@ -99,11 +99,11 @@ class EncherirController extends AbstractController
         if ($enchere->getLetypeenchere()->getId() == 1) {
             //Vérifie que l'offre saisie est supérieur au prix actuel * par le coefficient saisie (Classique)
             if ($prixActuel * $coefficient < $prixoffre)
-                return "PRICE_TOO_LOW";
+                return "PRICE_TOO_LOW"+$prixActuel;
         }
         //Vérifie que l'offre saisie est inférieur au prix actuel * par le coefficient saisie (Inverser)
         if ($prixActuel * $coefficient > $prixoffre)
-            return "PRICE_TOO_HIGH";
+            return "PRICE_TOO_HIGH"+$prixActuel;
         return null;
     }
 }
