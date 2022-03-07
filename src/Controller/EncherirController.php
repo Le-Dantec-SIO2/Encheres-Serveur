@@ -74,7 +74,8 @@ class EncherirController extends AbstractController
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
         $var = $encherirRepository->findActualPrice($enchere);
         $response = new Utils;
-        return $response->GetJsonResponse($request, $var);
+        $tab = [];
+        return $response->GetJsonResponse($request,$var,$tab);
     }
     /**
      * @Route("/api/getLastSixOffer",name="GetLastSixOffer")
@@ -86,7 +87,8 @@ class EncherirController extends AbstractController
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
         $var = $encherirRepository->findLastSixOffer($enchere);
         $response = new Utils;
-        return $response->GetJsonResponse($request, $var);
+        $tab = [];
+        return $response->GetJsonResponse($request, $var,$tab);
     }
 
     public static function PriceAuthorize($IdEnchere, $prixoffre, $coefficient, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
