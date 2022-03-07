@@ -46,6 +46,7 @@ class Enchere
 
     /**
      * @ORM\OneToMany(targetEntity=Encherir::class, mappedBy="laenchere")
+     * @Ignore()
      */
     private $lesencherirs;
 

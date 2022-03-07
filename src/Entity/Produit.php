@@ -36,11 +36,13 @@ class Produit
 
     /**
      * @ORM\ManyToMany(targetEntity=Magasin::class, mappedBy="lesproduits")
+     * @Ignore()
      */
     private $lesmagasins;
 
     /**
      * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="leproduit")
+     * @Ignore()
      */
     private $lesencheres;
 
