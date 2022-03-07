@@ -31,12 +31,12 @@ class EncherirController extends AbstractController
     /**
      * @Route("/api/getLastFiveOffer",name="GetLastFiveOffer")
      */
-    public function GetLastFiveOffer(Request $request,EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
+    public function GetLastSixOffer(Request $request,EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
         $var = isset($postdata->Id) ? $id = $postdata->Id :  Utils::ErrorMissingArguments();
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
-        $var = $encherirRepository->findLastFiveOffer($enchere);
+        $var = $encherirRepository->findLastSixOffer($enchere);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
