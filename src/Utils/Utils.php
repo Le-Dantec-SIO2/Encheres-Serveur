@@ -32,5 +32,10 @@ class Utils{
         $response->headers->set('Content-Type', 'text/html');
         return $response;
     }
+    public static function ErrorCustom($message){
+        $response = new Response($message,400);
+        $response->headers->set('Content-Type', 'text/html');
+        return $response;
+    }
 }
 ?>
