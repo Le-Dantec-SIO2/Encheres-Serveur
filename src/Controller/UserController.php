@@ -26,7 +26,7 @@ class UserController extends AbstractController
         if (isset($postdata->Id))
             $id = $postdata->Id;
         else 
-            Utils::ErrorMissingArguments();
+           return Utils::ErrorMissingArguments();
         
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
         $var = $encherirRepository->findGagnantEnchere($enchere);
@@ -40,11 +40,12 @@ class UserController extends AbstractController
     public function GetUserByMailAndPass(Request $request, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
-        if (isset($postdata->email)|| isset($postdata->password)) {
+        if (isset($postdata->email)&& isset($postdata->password)) {
             $email = $postdata->email;
             $password = $postdata->password;
-        } else 
-            Utils::ErrorMissingArguments();
+        } 
+        else 
+            return  Utils::ErrorMissingArguments();
         $var = $userRepository->findUserByEmailAndPass(['email' => $email],['password' => $password]);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
