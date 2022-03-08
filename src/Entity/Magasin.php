@@ -62,12 +62,12 @@ class Magasin
     /**
      * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="leMagasin", orphanRemoval=true)
      */
-    private $lesEncheres;
+    private $lesencheres;
 
     public function __construct()
     {
         $this->lesproduits = new ArrayCollection();
-        $this->lesEncheres = new ArrayCollection();
+        $this->lesencheres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,13 +188,13 @@ class Magasin
      */
     public function getLesEncheres(): Collection
     {
-        return $this->lesEncheres;
+        return $this->lesencheres;
     }
 
     public function addLesEnchere(Enchere $lesEnchere): self
     {
-        if (!$this->lesEncheres->contains($lesEnchere)) {
-            $this->lesEncheres[] = $lesEnchere;
+        if (!$this->lesencheres->contains($lesEnchere)) {
+            $this->lesencheres[] = $lesEnchere;
             $lesEnchere->setLeMagasin($this);
         }
 
@@ -203,7 +203,7 @@ class Magasin
 
     public function removeLesEnchere(Enchere $lesEnchere): self
     {
-        if ($this->lesEncheres->removeElement($lesEnchere)) {
+        if ($this->lesencheres->removeElement($lesEnchere)) {
             // set the owning side to null (unless already changed)
             if ($lesEnchere->getLeMagasin() === $this) {
                 $lesEnchere->setLeMagasin(null);
