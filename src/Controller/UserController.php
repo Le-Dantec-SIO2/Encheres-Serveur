@@ -45,7 +45,7 @@ class UserController extends AbstractController
             $password = $postdata->password;
         } 
         else 
-            return  Utils::ErrorMissingArgumentsDebug($postdata->email,$postdata->password);
+            return  Utils::ErrorMissingArgumentsDebug($postdata->password);
         $var = $userRepository->findUserByEmailAndPass(['email' => $email],['password' => $password]);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);

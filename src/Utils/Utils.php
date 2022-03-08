@@ -40,8 +40,8 @@ class Utils
 
         return $response;
     }
-    public static function  ErrorMissingArgumentsDebug($email,$password){
-        $response = new Response('MISSING_ARGUMENTS_PARAMETERS email :'+$email+' password :'+$password);
+    public static function  ErrorMissingArgumentsDebug($password){
+        $response = new Response('MISSING_ARGUMENTS_PARAMETERS password :'+$password);
         $response->headers->set('Content-Type', 'text/html');
 
         return $response;
