@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Serializer;
 
 class Utils
 {
-    public function GetJsonResponse(Request $request, $var, $ignoredFields)
+    public function GetJsonResponse(Request $request, $var, $ignoredFields = ['lesencherirs','lesencheres','lesmagasins','lesproduits'])
     {
         $encoder = new JsonEncoder();
         $defaultContext = [
