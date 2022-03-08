@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
@@ -39,6 +40,7 @@ class UserController extends AbstractController
      */
     public function GetUserByMailAndPass(Request $request, UserRepository $userRepository)
     {
+       
         $postdata = json_decode($request->getContent());
         if (isset($postdata->email)|| isset($postdata->password)) {
             $email = $postdata->email;
