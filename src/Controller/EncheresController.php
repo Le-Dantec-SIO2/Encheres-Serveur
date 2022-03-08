@@ -45,6 +45,18 @@ class EncheresController extends AbstractController
     }
 
     /**
+     * @Route("/api/getEncheresFutures", name="GetEncheresFutures")
+     */
+    public function GetEncheresFutures(Request $request, EnchereRepository $enchereRepository)
+    {
+        //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
+        $var = $enchereRepository->findEncheresFutures();
+        $response = new Utils;
+        $ignoredFields = ['lesencherirs','lesencheres'];
+        return $response->GetJsonResponse($request, $var,$ignoredFields);
+    }
+
+    /**
      * @Route("/api/getEncheresParticipes", name="GetEncheresParticipes")
      */
     public function GetEncheresParticipes(Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
