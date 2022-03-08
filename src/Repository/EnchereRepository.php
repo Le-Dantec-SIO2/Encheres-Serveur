@@ -86,6 +86,19 @@ class EnchereRepository extends ServiceEntityRepository
 
     }
 
+    public function findEncheresFutures(){
+        $ladate = new \DateTime('now');
+        $ladate = $ladate->format('Y-m-d');
+        return $this->createQueryBuilder('e')
+                ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere', 't')
+                ->andWhere(':ladate < e.datedebut')
+                ->orderBy('e.datedebut', 'ASC')
+                ->setParameter('ladate', $ladate)
+                ->getQuery()
+                ->getResult();
+    }
+
     public function findEncheresParticipes($userId)
     {
         return $this->createQueryBuilder('e')

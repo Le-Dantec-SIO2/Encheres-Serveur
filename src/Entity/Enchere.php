@@ -57,6 +57,11 @@ class Enchere
      */
     private $visibilite;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Magasin::class, inversedBy="lesencheres")
+     */
+    private $lemagasin;
+
     public function __construct()
     {
         $this->lesencherirs = new ArrayCollection();
@@ -171,6 +176,18 @@ class Enchere
     public function setVisibilite(bool $visibilite): self
     {
         $this->visibilite = $visibilite;
+
+        return $this;
+    }
+
+    public function getLemagasin(): ?Magasin
+    {
+        return $this->lemagasin;
+    }
+
+    public function setLemagasin(?Magasin $lemagasin): self
+    {
+        $this->lemagasin = $lemagasin;
 
         return $this;
     }

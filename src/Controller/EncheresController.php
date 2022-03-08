@@ -26,8 +26,7 @@ class EncheresController extends AbstractController
         $postdata = json_decode($request->getContent());
         $var = isset($postdata->Id) ? $enchereRepository->findEnchere($postdata->Id) : $enchereRepository->findEncheres();
         $response = new Utils;
-        $ignoredFields = ['lesencherirs','lesencheres'];
-        return $response->GetJsonResponse($request, $var,$ignoredFields);
+        return $response->GetJsonResponse($request, $var);
     }
 
 
@@ -40,8 +39,18 @@ class EncheresController extends AbstractController
         //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
         $var = isset($postdata -> Id) ? $enchereRepository->findEnchereEnCours($postdata->Id) : $enchereRepository->findEncheresEnCours();
         $response = new Utils;
-        $ignoredFields = ['lesencherirs','lesencheres'];
-        return $response->GetJsonResponse($request, $var,$ignoredFields);
+        return $response->GetJsonResponse($request, $var);
+    }
+
+    /**
+     * @Route("/api/getEncheresFutures", name="GetEncheresFutures")
+     */
+    public function GetEncheresFutures(Request $request, EnchereRepository $enchereRepository)
+    {
+        //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
+        $var = $enchereRepository->findEncheresFutures();
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
     }
 
     /**
@@ -53,8 +62,7 @@ class EncheresController extends AbstractController
         $userId = isset($postdata->Id) ? $postdata->Id : null;
         $var = IsNull($userId) ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresParticipes($userId);
         $response = new Utils;
-        $ignoredFields = ['lesencherirs','lesencheres'];
-        return $response->GetJsonResponse($request, $var,$ignoredFields);
+        return $response->GetJsonResponse($request, $var);
     }
 
     /**
@@ -65,8 +73,7 @@ class EncheresController extends AbstractController
         $postdata = json_decode($request->getContent());
         $var = $enchereRepository->findEnchere($postdata->Id);
         $response = new Utils;
-        $ignoredFields = ['lesencherirs','lesencheres'];
-        return $response->GetJsonResponse($request, $var,$ignoredFields);
+        return $response->GetJsonResponse($request, $var);
     }
 
     /**
@@ -77,7 +84,6 @@ class EncheresController extends AbstractController
         $postdata = json_decode($request->getContent());
         $var = $enchereRepository->findEnchereTestObjet($postdata->Id);
         $response = new Utils;
-        $ignoredFields = ['lesencherirs','lesencheres'];
-        return $response->GetJsonResponse($request, $var,$ignoredFields);
+        return $response->GetJsonResponse($request, $var);
     }
 }

@@ -21,3 +21,6 @@
 
 ### PHPDoc ###
 build
+
+### .env ###
+.env
