@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\Repository"
+    "\\src\\Controller",
+    "\\src\\Utils"
   ],
-  "SelectedNode": "\\symfony.lock",
+  "SelectedNode": "\\src\\Utils\\Utils.php",
   "PreviewInSolutionExplorer": false
 }
