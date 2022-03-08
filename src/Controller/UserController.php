@@ -39,7 +39,6 @@ class UserController extends AbstractController
      */
     public function GetUserByMailAndPass(Request $request, UserRepository $userRepository)
     {
-       
         $postdata = json_decode($request->getContent());
         if (isset($postdata->email)|| isset($postdata->password)) {
             $email = $postdata->email;
