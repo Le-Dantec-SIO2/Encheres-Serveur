@@ -59,7 +59,7 @@ class Enchere
 
     /**
      * @ORM\ManyToOne(targetEntity=Magasin::class, inversedBy="lesEncheres")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $leMagasin;
 
