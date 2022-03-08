@@ -59,6 +59,7 @@ class Magasin
      */
     private $lesproduits;
 
+<<<<<<< HEAD
     /**
      * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="leMagasin", orphanRemoval=true)
      */
@@ -68,6 +69,11 @@ class Magasin
     {
         $this->lesproduits = new ArrayCollection();
         $this->lesencheres = new ArrayCollection();
+=======
+    public function __construct()
+    {
+        $this->lesproduits = new ArrayCollection();
+>>>>>>> parent of 16044c7 (ajout magasin dans encher)
     }
 
     public function getId(): ?int
@@ -182,6 +188,7 @@ class Magasin
 
         return $this;
     }
+<<<<<<< HEAD
 
     /**
      * @return Collection<int, Enchere>
@@ -212,4 +219,6 @@ class Magasin
 
         return $this;
     }
+=======
+>>>>>>> parent of 16044c7 (ajout magasin dans encher)
 }

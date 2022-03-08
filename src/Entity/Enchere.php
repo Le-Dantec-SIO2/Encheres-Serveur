@@ -57,12 +57,15 @@ class Enchere
      */
     private $visibilite;
 
+<<<<<<< HEAD
     /**
      * @ORM\ManyToOne(targetEntity=Magasin::class, inversedBy="lesencheres")
      * @ORM\JoinColumn(nullable=true)
      */
     private $leMagasin;
 
+=======
+>>>>>>> parent of 16044c7 (ajout magasin dans encher)
     public function __construct()
     {
         $this->lesencherirs = new ArrayCollection();
@@ -177,18 +180,6 @@ class Enchere
     public function setVisibilite(bool $visibilite): self
     {
         $this->visibilite = $visibilite;
-
-        return $this;
-    }
-
-    public function getLeMagasin(): ?Magasin
-    {
-        return $this->leMagasin;
-    }
-
-    public function setLeMagasin(?Magasin $leMagasin): self
-    {
-        $this->leMagasin = $leMagasin;
 
         return $this;
     }
