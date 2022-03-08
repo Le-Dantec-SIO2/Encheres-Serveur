@@ -59,9 +59,8 @@ class Magasin
      */
     private $lesproduits;
 
-<<<<<<< HEAD
     /**
-     * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="leMagasin", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="lemagasin")
      */
     private $lesencheres;
 
@@ -69,11 +68,6 @@ class Magasin
     {
         $this->lesproduits = new ArrayCollection();
         $this->lesencheres = new ArrayCollection();
-=======
-    public function __construct()
-    {
-        $this->lesproduits = new ArrayCollection();
->>>>>>> parent of 16044c7 (ajout magasin dans encher)
     }
 
     public function getId(): ?int
@@ -188,37 +182,34 @@ class Magasin
 
         return $this;
     }
-<<<<<<< HEAD
 
     /**
      * @return Collection<int, Enchere>
      */
-    public function getLesEncheres(): Collection
+    public function getLesencheres(): Collection
     {
         return $this->lesencheres;
     }
 
-    public function addLesEnchere(Enchere $lesEnchere): self
+    public function addLesenchere(Enchere $lesenchere): self
     {
-        if (!$this->lesencheres->contains($lesEnchere)) {
-            $this->lesencheres[] = $lesEnchere;
-            $lesEnchere->setLeMagasin($this);
+        if (!$this->lesencheres->contains($lesenchere)) {
+            $this->lesencheres[] = $lesenchere;
+            $lesenchere->setLemagasin($this);
         }
 
         return $this;
     }
 
-    public function removeLesEnchere(Enchere $lesEnchere): self
+    public function removeLesenchere(Enchere $lesenchere): self
     {
-        if ($this->lesencheres->removeElement($lesEnchere)) {
+        if ($this->lesencheres->removeElement($lesenchere)) {
             // set the owning side to null (unless already changed)
-            if ($lesEnchere->getLeMagasin() === $this) {
-                $lesEnchere->setLeMagasin(null);
+            if ($lesenchere->getLemagasin() === $this) {
+                $lesenchere->setLemagasin(null);
             }
         }
 
         return $this;
     }
-=======
->>>>>>> parent of 16044c7 (ajout magasin dans encher)
 }
