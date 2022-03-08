@@ -21,7 +21,7 @@ class Utils
                     },
                 ];
                 $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-                $dateNormalizer = new DateTimeNormalizer(array('datetime_format' => 'd/m/Y H:i:s'));
+                $dateNormalizer = new DateTimeNormalizer(array('datetime_format' => 'd-m-Y H:i:s'));
 
         $serializer = new Serializer([$dateNormalizer, $normalizer], [$encoder]);
         $data = $request->getContent();
