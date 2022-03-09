@@ -40,8 +40,8 @@ class Utils
 
         return $response;
     }
-    public static function  ErrorMissingArgumentsDebug($postdata){
-        $response = new Response('MISSING_ARGUMENTS_PARAMETERS postdata :'+$postdata);
+    public static function  ErrorMissingArgumentsDebug($content){
+        $response = new Response('MISSING_ARGUMENTS_PARAMETERS content :'+$content);
         $response->headers->set('Content-Type', 'text/html');
 
         return $response;
