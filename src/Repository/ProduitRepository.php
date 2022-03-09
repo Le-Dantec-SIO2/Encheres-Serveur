@@ -27,7 +27,7 @@ class ProduitRepository extends ServiceEntityRepository
                 ->andWhere('p.id = :produitId')
                 ->setParameter(':produitId', $produitId)
                 ->getQuery()
-                ->getResult();
+                ->getOneOrNullResult();
         } else {
             return $this->createQueryBuilder('p')
                 ->select('p.nom, p.photo')

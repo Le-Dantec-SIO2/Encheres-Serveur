@@ -62,7 +62,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setParameter('val', $userId)
             ->orderBy('u.id', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
     public function findUserByEmailAndPass($mail,$password)

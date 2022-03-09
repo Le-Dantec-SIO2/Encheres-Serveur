@@ -38,7 +38,7 @@ class EncherirRepository extends ServiceEntityRepository
                 ->setParameter(':ladatemax', $maxDate)
                 ->select('u.pseudo', 'u.photo')
                 ->getQuery()
-                ->getResult();
+                ->getOneOrNullResult();
         } else {
             return null;
         }
