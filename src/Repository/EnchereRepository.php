@@ -167,7 +167,7 @@ class EnchereRepository extends ServiceEntityRepository
             ->innerJoin('e.lesencherirs', 'en')
             ->innerJoin('en.leuser', 'u')
             ->orderBy('e.datedebut', 'ASC')
-            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut, MAX(en.prixenchere) AS enchereactuelle")
+            ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id, p.id AS produit_id, MAX(en.prixenchere) AS enchereactuelle")
             ->groupBy('e.id')
             ->getQuery()
             ->getResult();
