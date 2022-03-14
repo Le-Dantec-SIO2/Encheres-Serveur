@@ -24,7 +24,10 @@ class EncheresController extends AbstractController
     public function Getencheres(Request $request, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
-        $var = isset($postdata->Id) ? $enchereRepository->findEnchere($postdata->Id) : $enchereRepository->findEncheres();
+        if(isset($postdata->IdTypeEnchere))
+            $var = isset($postdata->Id) ? $enchereRepository->findEnchere($postdata->Id) : $enchereRepository->findEncheresByType($postdata->IdTypeEnchere);
+        else
+            $var = isset($postdata->Id) ? $enchereRepository->findEnchere($postdata->Id) : $enchereRepository->findEncheres();
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
@@ -36,8 +39,11 @@ class EncheresController extends AbstractController
     public function GetEncheresEnCours(Request $request, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
+        if(isset($postdata->IdTypeEnchere))
+            $var = isset($postdata -> Id) ? $enchereRepository->findEnchereEnCours($postdata->Id) : $enchereRepository->findEncheresEnCoursByType($postdata->IdTypeEnchere);
+        else
+            $var = isset($postdata -> Id) ? $enchereRepository->findEnchereEnCours($postdata->Id) : $enchereRepository->findEncheresEnCours();
         //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
-        $var = isset($postdata -> Id) ? $enchereRepository->findEnchereEnCours($postdata->Id) : $enchereRepository->findEncheresEnCours();
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
