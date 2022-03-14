@@ -159,24 +159,17 @@ class EnchereRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-     public function findEnchereTestObjet($enchereId = false)
+     public function findEnchereTestObjet()
     {
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
-        
-            return $this->createQueryBuilder('e')
-                ->innerjoin('e.leproduit', 'p')
-                ->innerJoin('e.letypeenchere','t')
-                ->innerJoin(''e.lesencherirsl'l')
-                
-                ->andWhere('e.datefin > :ladate')
-                ->andWhere('e.id = :enchereId')
-                ->setParameter(':enchereId',$enchereId)
-                ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate',$ladate)
-                ->getQuery()
-                ->getOneOrNullResult()
-            ;
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.leproduit', 'p')
+            ->innerJoin('e.letypeenchere', 't')
+            ->innerJoin('e.lesencherirs', 'en')
+            ->innerJoin('en.leuser', 'u')
+            ->orderBy('e.datedebut', 'ASC')
+            ->select("e.lesencherirs.prixenchere,e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id, p.id AS produit_id")
+            ->getQuery()
+            ->getResult();
             }
     /*
     public function findOneBySomeField($value): ?Enchere
