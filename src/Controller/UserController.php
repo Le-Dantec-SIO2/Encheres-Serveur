@@ -63,9 +63,8 @@ class UserController extends AbstractController
 
         $user->setPseudo($postdata->Pseudo);
         
-        $encodedData= chunk_split(base64_encode(file_get_contents($postdata->Photo)));
         
-        $user->setphoto(($encodedData));
+        $user->setphoto(($postdata->Photo));
 
 
 
