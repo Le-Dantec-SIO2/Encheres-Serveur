@@ -62,7 +62,7 @@ class UserController extends AbstractController
         $user->setPassword($postdata->Password);
 
         $user->setPseudo($postdata->Pseudo);
-        $user->setphoto(file_get_contents($postdata->Photo));
+        $user->setphoto($postdata->Photo);
 
 
 
