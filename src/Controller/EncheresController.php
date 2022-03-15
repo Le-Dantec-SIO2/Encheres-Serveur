@@ -88,7 +88,7 @@ class EncheresController extends AbstractController
     public function GetenchereTestObjet(Request $request, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
-        $var = $enchereRepository->findEnchereTestObjet($postdata->Id);
+        $var = $enchereRepository->findEnchereTestObjet();
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
