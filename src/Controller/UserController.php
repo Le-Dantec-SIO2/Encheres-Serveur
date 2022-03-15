@@ -47,7 +47,6 @@ class UserController extends AbstractController
         else 
             return  Utils::ErrorMissingArgumentsDebug($request->getContent());
         $var = $userRepository->findUserByEmailAndPass(['email' => $email],['password' => $password]);
-        dd($var);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
