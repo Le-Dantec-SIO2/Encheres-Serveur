@@ -62,7 +62,10 @@ class UserController extends AbstractController
         $user->setPassword($postdata->Password);
 
         $user->setPseudo($postdata->Pseudo);
-        $user->setphoto($postdata->Photo);
+        byte[] decodedByte = Base64.decode($postdata->Photo, 0);
+
+Bitmap bitmap = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+        $user->setphoto(bitmap);
 
 
 
