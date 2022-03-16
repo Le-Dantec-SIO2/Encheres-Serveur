@@ -78,7 +78,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             AND u.password = :password'
             
         )
-        ->setParameter('email', $mail);
+        ->setParameter('email', $mail)
         ->setParameter('password', $password);
 
         // returns an array of Product objects
