@@ -189,9 +189,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoto()
+    public function getPhoto(): ? string
     {
-        return $this->photo;
+    return is_resource($this->photo) ? stream_get_contents($this->photo) : $this->photo;
+     
     }
 
     public function setPhoto($photo): self
