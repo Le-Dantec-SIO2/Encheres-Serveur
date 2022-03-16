@@ -67,13 +67,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function findUserByEmailAndPass($mail,$password)
     {
-        return $this->createQueryBuilder('u')
-            ->select( 'u.pseudo','u.password','u.email',convert('u.photo' using utf8))
-            ->andWhere('u.email = :email')
-            ->andWhere('u.password = :password')
-            ->setParameter(':email', $mail)
-            ->setParameter(':password', $password)
-            ->getQuery()
-            ->getOneOrNullResult();
+
+
+    $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT u.pseudo,u.password,u.email,convert(u.photo using utf8)
+            FROM User u
+            WHERE u.email = :email
+            AND u.password = :password'
+            
+        )
+        ->setParameter('email', $mail);
+        ->setParameter('password', $password);
+
+        // returns an array of Product objects
+        return $query->getOneOrNullResult();
+    }
+
+
     }
 }
