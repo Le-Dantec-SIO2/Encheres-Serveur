@@ -68,7 +68,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findUserByEmailAndPass($mail,$password)
     {
         return $this->createQueryBuilder('u')
-            ->select( 'u.pseudo','u.password','u.email',@convert('u.photo'@using utf8))
+            ->select( 'u.pseudo','u.password','u.email','convert(u.photo using utf8)')
             ->convert
             ->andWhere('u.email = :email')
             ->andWhere('u.password = :password')
