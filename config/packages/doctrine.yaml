@@ -24,6 +24,9 @@ doctrine:
         dql :
             datetime_functions:
                     DATE_FORMAT: DoctrineExtensions\Query\Mysql\DateFormat
+            string_functions:
+                    cast: DoctrineExtensions\Query\Mysql\Cast
+
 
 
 
