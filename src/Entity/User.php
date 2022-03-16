@@ -48,6 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $pseudo;
 
     /**
+    * @Serializer\Type("string")
      * @ORM\Column(type="blob")
      */
     private $photo;
