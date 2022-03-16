@@ -73,7 +73,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $query = $entityManager->createQuery(
             'SELECT u.pseudo,u.password,u.email,cast(u.photo as utf8)
-            FROM User u
+            FROM App\Entity\User u
             WHERE u.email = :email
             AND u.password = :password'
             
