@@ -3,15 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Utils\Utils;
+use Monolog\Handler\Curl\Util;
 use App\Repository\UserRepository;
 use App\Repository\EnchereRepository;
 use App\Repository\EncherirRepository;
-use App\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
-use Monolog\Handler\Curl\Util;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -68,13 +69,18 @@ class UserController extends AbstractController
         $user->setphoto(($postdata->Photo));
 
 
+        try{
+            $manager->persist($user);
+            $manager->flush();
+            $response = new Response($user->getId());
+        }
+        catch(UniqueConstraintViolationException $e){
+            $response = new Response('Email déjà existant',409);
 
-        $manager->persist($user);
-        $manager->flush();
-
-        $response = new Response($user->getId());
+        }
         $response->headers->set('Content-Type', 'text/html');
 
         return $response;
+
     }
 }
