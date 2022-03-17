@@ -3,8 +3,10 @@
     "",
     "\\src",
     "\\src\\Controller",
+    "\\src\\Entity",
+    "\\src\\Repository",
     "\\src\\Utils"
   ],
-  "SelectedNode": "\\src\\Utils\\Utils.php",
+  "SelectedNode": "\\src\\Controller\\UserController.php",
   "PreviewInSolutionExplorer": false
 }
