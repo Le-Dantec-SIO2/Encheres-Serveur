@@ -65,10 +65,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult();
     }
 
-    public function findUserByEmailAndPass($mail,$password)
+    public function findUserByEmailAndPass($mail, $password)
     {
         return $this->createQueryBuilder('u')
-            ->select( 'u.id','u.pseudo','u.photo','u.password','u.email')
+            ->select('u.id', 'u.pseudo', 'CAST(u.photo AS VARCHAR)', 'u.password', 'u.email')
             ->andWhere('u.email = :email')
             ->andWhere('u.password = :password')
             ->setParameter(':email', $mail)
@@ -76,7 +76,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-
-    
 }

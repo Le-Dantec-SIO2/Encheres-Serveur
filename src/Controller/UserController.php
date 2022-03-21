@@ -18,6 +18,15 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
+
+    public function string_to_blob($var)
+    {
+        $bin = "";
+        for ($i = 0, $j = strlen($var); $i < $j; $i++)
+            $bin .= decbin(ord($var[$i])) . " ";
+        echo $bin;
+    }
+
     /**
      * @Route("/api/getGagnant", name="getGagnant")
      */
@@ -26,9 +35,9 @@ class UserController extends AbstractController
         $postdata = json_decode($request->getContent());
         if (isset($postdata->Id))
             $id = $postdata->Id;
-        else 
-           return Utils::ErrorMissingArguments();
-        
+        else
+            return Utils::ErrorMissingArguments();
+
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
         $var = $encherirRepository->findGagnantEnchere($enchere);
         $response = new Utils;
@@ -41,24 +50,19 @@ class UserController extends AbstractController
     public function GetUserByMailAndPass(Request $request, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
-        if (isset($postdata->Email)&& isset($postdata->Password)) {
+        if (isset($postdata->Email) && isset($postdata->Password)) {
             $email = $postdata->Email;
             $password = $postdata->Password;
-        } 
-        else 
+        } else
             return  Utils::ErrorMissingArgumentsDebug($request->getContent());
-        $var = $userRepository->findUserByEmailAndPass(['email' => $email],['password' => $password]);
-       dd($var);
+        $var = $userRepository->findUserByEmailAndPass(['email' => $email], ['password' => $password]);
+        dd($var);
         $response = new Utils;
+        $blob = $var['photo'];
         return $response->GetJsonResponse($request, $var);
     }
 
-    function string_to_blob($var){
-        $bin = "";
-        for($i = 0, $j = strlen($var); $i < $j; $i++) 
-        $bin .= decbin(ord($var[$i])) . " ";
-        echo $bin;
-    }
+
 
     /**
      * @Route("/api/postUser", name="postUser")
@@ -71,23 +75,20 @@ class UserController extends AbstractController
         $user->setPassword($postdata->Password);
 
         $user->setPseudo($postdata->Pseudo);
-        
-        
+
+
         $user->setphoto(($postdata->Photo));
 
 
-        try{
+        try {
             $manager->persist($user);
             $manager->flush();
             $response = new Response($user->getId());
-        }
-        catch(UniqueConstraintViolationException $e){
-            $response = new Response('Email déjà existant',409);
-
+        } catch (UniqueConstraintViolationException $e) {
+            $response = new Response('Email déjà existant', 409);
         }
         $response->headers->set('Content-Type', 'text/html');
 
         return $response;
-
     }
 }
