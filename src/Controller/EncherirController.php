@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\EncherirRepository;
 use App\Repository\EnchereRepository;
 use Exception;
+use Monolog\Handler\Curl\Util;
 use phpDocumentor\Reflection\Types\Null_;
 
 use function PHPUnit\Framework\isNull;
@@ -70,9 +71,15 @@ class EncherirController extends AbstractController
     public function GetActualPrice(Request $request, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
     {
         $postdata = json_decode($request->getContent());
-        $var = isset($postdata->Id) ? $id = $postdata->Id :  Utils::ErrorMissingArguments();
-        $enchere = $enchereRepository->findOneBy(['id' => $id]);
-        $var = $encherirRepository->findActualPrice($enchere);
+        if(!isset($postdata->Id)){
+            $var = Utils::ErrorMissingArguments();
+        } 
+        else {
+            $id = $postdata->Id;
+            $enchere = $enchereRepository->findOneBy(['id' => $id]);
+            $var = $encherirRepository->findActualPrice($enchere);
+        }
+        
         $response = new Utils;
         $tab = [];
         return $response->GetJsonResponse($request,$var,$tab);
