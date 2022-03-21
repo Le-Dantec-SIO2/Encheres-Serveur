@@ -41,7 +41,7 @@ class UserController extends AbstractController
     /**
      * @Route("/api/getUser", name="getUser")
      */
-    public function getUser(Request $request, UserRepository $userRepository)
+    public function getUserbyId(Request $request, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
         if (isset($postdata->Id))
@@ -49,7 +49,7 @@ class UserController extends AbstractController
         else
             return Utils::ErrorMissingArguments();
 
-        $user = $userRepository->findOneBy(['id' => $id]);
+        $user = $userRepository->findOneById(['id' => $id]);
         $response = new Utils;
         return $response->GetJsonResponse($request, $user);
     }
