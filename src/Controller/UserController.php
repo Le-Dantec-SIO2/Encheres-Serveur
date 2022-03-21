@@ -39,6 +39,23 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/api/getUser", name="getUser")
+     */
+    public function getUser(Request $request, UserRepository $userRepository)
+    {
+        $postdata = json_decode($request->getContent());
+        if (isset($postdata->Id))
+            $id = $postdata->Id;
+        else
+            return Utils::ErrorMissingArguments();
+
+        $user = $userRepository->findOneBy(['id' => $id]);
+        $var = $userRepository->findGagnantEnchere($user);
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
+    }
+
+    /**
      * @Route("/api/getUserByMailAndPass",name="GetUserByMailAndPass")
      */
     public function GetUserByMailAndPass(Request $request, UserRepository $userRepository)
