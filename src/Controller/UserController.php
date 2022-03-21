@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
 
-    
+
 
     /**
      * @Route("/api/getGagnant", name="getGagnant")
@@ -50,9 +50,8 @@ class UserController extends AbstractController
             return Utils::ErrorMissingArguments();
 
         $user = $userRepository->findOneBy(['id' => $id]);
-        $var = $userRepository->findGagnantEnchere($user);
         $response = new Utils;
-        return $response->GetJsonResponse($request, $var);
+        return $response->GetJsonResponse($request, $user);
     }
 
     /**
