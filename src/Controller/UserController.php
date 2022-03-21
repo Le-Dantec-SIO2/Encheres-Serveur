@@ -19,13 +19,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
 
-    public function string_to_blob($var)
-    {
-        $bin = "";
-        for ($i = 0, $j = strlen($var); $i < $j; $i++)
-            $bin .= decbin(ord($var[$i])) . " ";
-        echo $bin;
-    }
+    
 
     /**
      * @Route("/api/getGagnant", name="getGagnant")
@@ -56,9 +50,7 @@ class UserController extends AbstractController
         } else
             return  Utils::ErrorMissingArgumentsDebug($request->getContent());
         $var = $userRepository->findUserByEmailAndPass(['email' => $email], ['password' => $password]);
-        
         $response = new Utils;
-        $blob = $var['photo'];
         return $response->GetJsonResponse($request, $var);
     }
 
