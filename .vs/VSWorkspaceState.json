@@ -8,6 +8,6 @@
     "\\src\\Repository",
     "\\src\\Utils"
   ],
-  "SelectedNode": "\\src\\Repository\\EncherirRepository.php",
+  "SelectedNode": "\\src\\Controller\\EncherirController.php",
   "PreviewInSolutionExplorer": false
 }
