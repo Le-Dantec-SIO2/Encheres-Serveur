@@ -66,8 +66,7 @@ class EncherirController extends AbstractController
         return $response;
     }
     /**
-     * @Route("
-     ",name="GetActualPrice")
+     * @Route("/api/getActualPrice",name="GetActualPrice")
      */
     public function GetActualPrice(Request $request, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
     {
