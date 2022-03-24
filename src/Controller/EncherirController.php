@@ -102,7 +102,11 @@ class EncherirController extends AbstractController
     {
         //On cherche l'enchère
         $enchere = $enchereRepository->findOneBy(['id' => $IdEnchere]);
-        $prixActuel = $encherirRepository->findActualPrice($enchere)["prixenchere"];
+        //On cherche le prix actuel
+        $encherir =$encherirRepository->findActualPrice($enchere);
+        //Si il y'a un prix actuel lui affecter son prix
+        if($encherir!=null)
+            $prixActuel = $encherir["prixenchere"];
 
         
         //Si le type d'enchère est classique
