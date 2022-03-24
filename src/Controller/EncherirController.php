@@ -101,7 +101,7 @@ class EncherirController extends AbstractController
     public static function PriceAuthorize($IdEnchere, $prixoffre, $coefficient, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
     {
         //On cherche l'enchère
-        $enchere = $enchereRepository->find($IdEnchere);
+        $enchere = $enchereRepository->findOneBy(['id' => $IdEnchere]);
         $prixActuel = $encherirRepository->findActualPrice($enchere)["prixenchere"];
 
         
