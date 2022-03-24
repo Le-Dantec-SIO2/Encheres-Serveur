@@ -103,12 +103,20 @@ class EncherirController extends AbstractController
         //On cherche l'enchère
         $enchere = $enchereRepository->find($IdEnchere);
         $prixActuel = $encherirRepository->findActualPrice($enchere)["prixenchere"];
+
+        
         //Si le type d'enchère est classique
         if ($enchere->getLetypeenchere()->getId() == 1) {
+            // Si il n'y a pas de prix de départ mettre le prix de départ comme étant 0
+            if($prixActuel == null)
+                $prixActuel=0;
             //Vérifie que l'offre saisie est supérieur au prix actuel * par le coefficient saisie (Classique)
             if (!(($prixActuel * $coefficient) < $prixoffre))
                 return "PRICE_TOO_LOW";
         } else {
+            // Si il n'y a pas de prix de départ mettre le prix de départ comme étant le prix réel
+            if($prixActuel == null)
+                $prixActuel=$enchere->getLeproduit()->getPrixreel();
             //Vérifie que l'offre saisie est inférieur au prix actuel * par le coefficient saisie (Inverser)
             if (!(($prixActuel * $coefficient) > $prixoffre))
                 return "PRICE_TOO_HIGH";
