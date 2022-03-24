@@ -107,8 +107,8 @@ class EncherirController extends AbstractController
         //Si il y'a un prix actuel lui affecter son prix
         if($encherir!=null)
             $prixActuel = $encherir["prixenchere"];
-
-        
+        else
+            $prixActuel = null;        
         //Si le type d'enchère est classique
         if ($enchere->getLetypeenchere()->getId() == 1) {
             // Si il n'y a pas de prix de départ mettre le prix de départ comme étant 0
