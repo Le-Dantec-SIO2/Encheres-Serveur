@@ -94,7 +94,7 @@ class EncheresController extends AbstractController
     }
 
     /**
-     * @Route("/api/getProchaineEnchere", name="GetProchaineEnchere)
+     * @Route("/api/getProchaineEnchere", name="GetProchaineEnchere")
      */
     public function GetProchaineEnchere(Request $request, EnchereRepository $enchereRepository){
         $var = $enchereRepository->findProchaineEnchere();
