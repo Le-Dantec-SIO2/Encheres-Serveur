@@ -172,6 +172,16 @@ class EnchereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
             }
+    
+    public function findProchaineEnchere(){
+        return $this->createQueryBuilder('e')
+            ->innerjoin('e.leproduit', 'p')
+            ->innerJoin('e.letypeenchere', 't')
+            ->orderBy('ABS( DATEDIFF( e.datedebut, NOW()))')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
     /*
     public function findOneBySomeField($value): ?Enchere
     {
