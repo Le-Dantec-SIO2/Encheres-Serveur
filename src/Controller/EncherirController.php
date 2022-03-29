@@ -77,7 +77,7 @@ class EncherirController extends AbstractController
         else {
             $id = $postdata->Id;
             $enchere = $enchereRepository->findOneBy(['id' => $id]);
-            $var = $encherirRepository->findActualPrice($enchere);
+            $var = $encherirRepository->findActualPrice($enchere)!=null ? $encherirRepository->findActualPrice($enchere) : 0;
         }
         
         $response = new Utils;
