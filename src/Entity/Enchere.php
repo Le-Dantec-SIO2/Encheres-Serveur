@@ -62,6 +62,11 @@ class Enchere
      */
     private $lemagasin;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $prixdepart;
+
     public function __construct()
     {
         $this->lesencherirs = new ArrayCollection();
@@ -188,6 +193,18 @@ class Enchere
     public function setLemagasin(?Magasin $lemagasin): self
     {
         $this->lemagasin = $lemagasin;
+
+        return $this;
+    }
+
+    public function getPrixdepart(): ?float
+    {
+        return $this->prixdepart;
+    }
+
+    public function setPrixdepart(float $prixdepart): self
+    {
+        $this->prixdepart = $prixdepart;
 
         return $this;
     }
