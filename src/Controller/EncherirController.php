@@ -108,7 +108,7 @@ class EncherirController extends AbstractController
         if($encherir!=null)
             $prixActuel = $encherir["prixenchere"];
         else
-            $prixActuel = $enchere["prixdepart"];     
+            $prixActuel = $enchere->getPrixdepart();     
         //Si le type d'enchère est classique
         if ($enchere->getLetypeenchere()->getId() == 1) {
             //Vérifie que l'offre saisie est supérieur au prix actuel * par le coefficient saisie (Classique)
