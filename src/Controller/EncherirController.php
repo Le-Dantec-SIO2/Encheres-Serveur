@@ -120,7 +120,7 @@ class EncherirController extends AbstractController
         } else {
             // Si il n'y a pas de prix de départ mettre le prix de départ comme étant le prix réel
             if($prixActuel == null)
-                $prixActuel=$enchere->getLeproduit()->getPrixreel();
+                $prixActuel=$enchere->getLeproduit()->getPrixreel()*1.5;
             //Vérifie que l'offre saisie est inférieur au prix actuel * par le coefficient saisie (Inverser)
             if (!(($prixActuel * $coefficient) > $prixoffre))
                 return "PRICE_TOO_HIGH";
