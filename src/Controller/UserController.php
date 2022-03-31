@@ -34,7 +34,6 @@ class UserController extends AbstractController
 
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
         $var = $encherirRepository->findGagnantEnchere($enchere);
-        dd($var);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
