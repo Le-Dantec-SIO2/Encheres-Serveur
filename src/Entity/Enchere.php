@@ -67,6 +67,11 @@ class Enchere
      */
     private $prixdepart;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tableauFlash;
+
     public function __construct()
     {
         $this->lesencherirs = new ArrayCollection();
@@ -205,6 +210,18 @@ class Enchere
     public function setPrixdepart(float $prixdepart): self
     {
         $this->prixdepart = $prixdepart;
+
+        return $this;
+    }
+
+    public function getTableauFlash(): ?string
+    {
+        return $this->tableauFlash;
+    }
+
+    public function setTableauFlash(?string $tableauFlash): self
+    {
+        $this->tableauFlash = $tableauFlash;
 
         return $this;
     }
