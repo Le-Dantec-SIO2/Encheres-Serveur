@@ -178,7 +178,7 @@ class EncherirController extends AbstractController
             $enchere = $enchereRepository->findOneBy(['id' => $postdata->idenchere]);
             $coeff = random_int(-10,10);
             $actualPrice = $encherirRepository->findActualPrice($enchere);
-            dd($actualPrice);
+            dd($enchere);
             $newPrice = $actualPrice + ($actualPrice*$coeff/100);
 
             $encherir = new Encherir();
