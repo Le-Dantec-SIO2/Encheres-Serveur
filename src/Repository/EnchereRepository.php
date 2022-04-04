@@ -181,7 +181,7 @@ class EnchereRepository extends ServiceEntityRepository
             ->orderBy('ABS( DATE_DIFF( e.datedebut, CURRENT_TIMESTAMP()))')
             ->setMaxResults(1)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
     /*
     public function findOneBySomeField($value): ?Enchere
