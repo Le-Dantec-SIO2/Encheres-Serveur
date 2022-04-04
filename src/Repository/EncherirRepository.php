@@ -36,7 +36,7 @@ class EncherirRepository extends ServiceEntityRepository
                 ->andWhere('en.dateenchere = :ladatemax')
                 ->setParameter(':laenchere', $enchere)
                 ->setParameter(':ladatemax', $maxDate)
-                ->select('u.pseudo', 'CAST(u.photo AS NCHAR) AS photo')
+                ->select('u.id, u.pseudo', 'CAST(u.photo AS NCHAR) AS photo')
                 ->getQuery()
                 ->getOneOrNullResult();
         } else {
