@@ -180,17 +180,27 @@ class EncherirController extends AbstractController
             $actualPrice = $encherirRepository->findActualPrice($enchere)!=null ? $encherirRepository->findActualPrice($enchere)["prixenchere"] : $enchere->getPrixdepart();
             $newPrice = $actualPrice + ($actualPrice*$coeff/100);
 
-            $encherir = new Encherir();
-            $encherir->setLeuser($user);
-            $encherir->setLaenchere($enchere);
-            $encherir->setPrixenchere($newPrice);
-            $encherir->setDateenchere(new \DateTime('now'));
+            $tableauFlash = $enchere->getTableauFlash();
+            if(strpos($tableauFlash,$case) === false){
+                $enchere->setTableauFlash($tableauFlash.$case);
 
-            $em->persist($encherir);
-            $em->flush();
-            $var = ['prixenchere'=>$newPrice,'coefficient'=>$coeff];
+                $encherir = new Encherir();
+                $encherir->setLeuser($user);
+                $encherir->setLaenchere($enchere);
+                $encherir->setPrixenchere($newPrice);
+                $encherir->setDateenchere(new \DateTime('now'));
 
-            $response = new Utils();
-            return $response->GetJsonResponse($request, $var);
+                $em->persist($encherir);
+                $em->persist($enchere);
+                $em->flush();
+                $var = ['prixenchere'=>$newPrice,'coefficient'=>$coeff."%"];
+
+                $response = new Utils();
+                return $response->GetJsonResponse($request, $var);
+            }
+            else{
+                $response = new Response("Dupplicate case", 409);
+                return $response;
+            }
     }
 }
