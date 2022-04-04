@@ -188,7 +188,7 @@ class EncherirController extends AbstractController
 
             $em->persist($encherir);
             $em->flush();
-            $var = [['prixenchere'=>$newPrice],['coefficient'=>$coeff]];
+            $var = ['prixenchere'=>$newPrice,'coefficient'=>$coeff];
 
             $response = new Utils();
             return $response->GetJsonResponse($request, $var);
