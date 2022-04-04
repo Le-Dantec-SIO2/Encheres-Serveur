@@ -59,6 +59,7 @@ class EncherirRepository extends ServiceEntityRepository
     }
         public function findOneEncherir($enchere){
         return $this->createQueryBuilder('en') 
+            ->innerJoin('en.leuser', 'u')
             ->andWhere('en.laenchere = :enchere')
             ->orderBy('en.id','DESC')
             ->setParameter(':enchere', $enchere)
