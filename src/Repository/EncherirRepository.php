@@ -57,6 +57,16 @@ class EncherirRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+        public function findOneEncherir($enchere){
+        return $this->createQueryBuilder('en') 
+            ->andWhere('en.laenchere = :enchere')
+            ->orderBy('en.id','DESC')
+            ->setParameter(':enchere', $enchere)
+            ->select('u.id','en.prixenchere')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
     public function findLastSixOffer($enchere){
         return $this->createQueryBuilder('en') 
         ->innerJoin('en.leuser', 'u')

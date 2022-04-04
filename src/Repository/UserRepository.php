@@ -57,6 +57,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findUserById($userId)
     {
         return $this->createQueryBuilder('u')
+        ->innerJoin('u.leuser', 'u')
             ->select('u.id', 'u.email', 'u.pseudo')
             ->andWhere('u.id = :val')
             ->setParameter('val', $userId)
