@@ -26,7 +26,7 @@ class EncherirController extends AbstractController
     /**
      * Permet d'encherir sur une enchère
      * Retourne une réponse http
-     * @Route("/api/postEncherir", name="PostEncherir")
+     * @Route("/api/postEncherirInverse", name="PostEncherirInverse")
      */
     public function PostEncherirInverse(Request $request, UserRepository $userRepository, EnchereRepository $enchereRepository, EntityManagerInterface $em, EncherirRepository $encherirRepository)
     {
@@ -38,7 +38,7 @@ class EncherirController extends AbstractController
 
         //On cherche l'enchère
         $enchere = $enchereRepository->find($postdata->IdEnchere);
-         //On cherche le prix actuel
+         //On cherche un encherir
         $encherir =$encherirRepository->findOneEncherir($enchere);
         //On récupère le prix de l'offre
         $prixoffre = $postdata->PrixEnchere;
@@ -67,9 +67,7 @@ class EncherirController extends AbstractController
         $em->flush();
 
         }
-        
-}
-
+       
 
         //On renvoie une réponse pour savoir si l'opération à réussie
         $response = new Response('ok');
