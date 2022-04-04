@@ -45,7 +45,7 @@ class EncherirController extends AbstractController
         $prixoffre = $postdata->PrixEnchere;
 
         //On crée un objet encherir avec les valeurs trouvées
-        if ($encherir == null)
+        if ($encherir == null && $enchere->getPrixreserve()<$prixoffre)
         {
         $encherir = new Encherir();
         $encherir->setLeuser($user);
