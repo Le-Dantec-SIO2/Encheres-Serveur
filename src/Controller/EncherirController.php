@@ -175,6 +175,7 @@ class EncherirController extends AbstractController
          $postdata = json_decode($request->getContent());
             $user = $userRepository->findOneBy(['id'=> $postdata->iduser]);
             $case = $postdata->case;
+            dd(preg_match("\[[0-3]\,[0-3]\]",$case));
             $enchere = $enchereRepository->findOneBy(['id' => $postdata->idenchere]);
             $coeff = random_int(-10,10);
             $actualPrice = $encherirRepository->findActualPrice($enchere)!=null ? $encherirRepository->findActualPrice($enchere)["prixenchere"] : $enchere->getPrixdepart();
