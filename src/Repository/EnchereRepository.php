@@ -177,6 +177,7 @@ class EnchereRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->innerjoin('e.leproduit', 'p')
             ->innerJoin('e.letypeenchere', 't')
+            ->andWhere('e.datedebut > CURRENT_DATE()')
             ->orderBy('ABS( DATE_DIFF( e.datedebut, CURRENT_TIMESTAMP()))')
             ->setMaxResults(1)
             ->getQuery()
