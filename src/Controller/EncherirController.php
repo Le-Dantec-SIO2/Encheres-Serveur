@@ -42,14 +42,7 @@ class EncherirController extends AbstractController
         $encherir =$encherirRepository->findOneEncherir($enchere);
         //On récupère le prix de l'offre
         $prixoffre = $postdata->PrixEnchere;
-        //On récupère le Coefficient envoyer en paramètre si il y'en a un sinon mettre a 1 par défaut
-        isset($postdata->Coefficient) ?  $coefficient = floatval(str_replace(',', '.',($postdata->Coefficient))) : $coefficient = 1;
-        
-        //On vérifie que le prix proposer est cohérent et valide 
-        $authorize = EncherirController::PriceAuthorize($postdata->IdEnchere, $prixoffre, $coefficient, $encherirRepository, $enchereRepository);
-        if ($authorize != null)
-            //On renvoie une réponse pour savoir si l'opération à réussie
-            return Utils::ErrorCustom($authorize);
+
         //On crée un objet encherir avec les valeurs trouvées
         if ($encherir == null)
         {
