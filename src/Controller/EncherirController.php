@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Enchere;
 use App\Utils\Utils;
 use App\Entity\Encherir;
 use App\Entity\User;
@@ -165,5 +166,31 @@ class EncherirController extends AbstractController
                 return "PRICE_TOO_HIGH";
             return null;
         }
+    }
+
+    /**
+     * @Route("/api/postEncherirFlash",name="PostEncherirFlash")
+     */
+    public function postEncherirFlash(Request $request, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository,UserRepository $userRepository, EntityManagerInterface $em ){
+         $postdata = json_decode($request->getContent());
+            $user = $userRepository->findOneBy(['id'=> $postdata->iduser]);
+            $case = $postdata->case;
+            $enchere = $enchereRepository->findOneBy(['id' => $postdata->idenchere]);
+            $coeff = random_int(-10,10);
+            $actualPrice = $encherirRepository->findActualPrice($enchere)->prixenchere;
+            $newPrice = $actualPrice + ($actualPrice*$coeff/100);
+
+            $encherir = new Encherir();
+            $encherir->setLeuser($user);
+            $encherir->setLaenchere($enchere);
+            $encherir->setPrixenchere($newPrice);
+            $encherir->setDateenchere(new \DateTime('now'));
+
+            $em->persist($encherir);
+            $em->flush();
+            $var = [['prixenchere'=>$newPrice],['coefficient'=>$coeff]];
+
+            $response = new Utils();
+            return $response->GetJsonResponse($request, $var);
     }
 }
