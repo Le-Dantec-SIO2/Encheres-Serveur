@@ -66,8 +66,10 @@ class PlayerFlashController extends AbstractController
         $postdata = json_decode($request->getContent());
         $var = $enchereRepository->findOneBy(['id' => $postdata->IdEnchere])->getPlayerFlashes();
         $users =new ArrayCollection();
-        foreach($var as $user)
-            $users->add($userRepository->findOneById($user->getId())); 
+        foreach($var as $flashe){
+          $user = $flashe->getLeuser();
+            $users->add($userRepository->findOneById( $user->first())); 
+        }
         $response = new Utils;
         $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
         return $response->GetJsonResponse($request, $users, $tab);
