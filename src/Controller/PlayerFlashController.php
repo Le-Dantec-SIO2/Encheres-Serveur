@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use App\Repository\EncherirRepository;
 use App\Repository\EnchereRepository;
+use App\Repository\PlayerFlashRepository;
 use Exception;
 use Monolog\Handler\Curl\Util;
 use phpDocumentor\Reflection\Types\Null_;
@@ -54,5 +55,16 @@ class PlayerFlashController extends AbstractController
         $response->headers->set('Content-Type', 'text/html');
 
         return $response;
+    }
+    /**
+     * @Route("/api/getAllPlayerFlashByID",name="GetAllPlayerFlashByID")
+     */
+    public function GetAllPlayerFlashByID(Request $request, EnchereRepository $enchereRepository)
+    {
+        $postdata = json_decode($request->getContent());
+        $var = $enchereRepository->findOneBy(['id' => $postdata->idenchere])->getPlayerFlashes();
+        $response = new Utils;
+        $tab = ['leuser','laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
+        return $response->GetJsonResponse($request, $var, $tab);
     }
 }
