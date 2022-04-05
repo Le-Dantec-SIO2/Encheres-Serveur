@@ -69,7 +69,7 @@ class PlayerFlashController extends AbstractController
         foreach($var as $user)
             $users->add($userRepository->findOneById($user->getId())); 
         $response = new Utils;
-        $tab = ['leuser','laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
+        $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
         return $response->GetJsonResponse($request, $users, $tab);
     }
 }
