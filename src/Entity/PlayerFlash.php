@@ -30,10 +30,7 @@ class PlayerFlash
      */
     private $Laenchere;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $OrdrePassage;
+
 
 
     public function __construct()
@@ -78,18 +75,6 @@ class PlayerFlash
     public function setLaenchere(?enchere $Laenchere): self
     {
         $this->Laenchere = $Laenchere;
-
-        return $this;
-    }
-
-    public function getOrdrePassage(): ?int
-    {
-        return $this->OrdrePassage;
-    }
-
-    public function setOrdrePassage(int $OrdrePassage): self
-    {
-        $this->OrdrePassage = $OrdrePassage;
 
         return $this;
     }
