@@ -73,7 +73,7 @@ class Enchere
     private $tableauFlash;
 
     /**
-     * @ORM\OneToMany(targetEntity=PlayerFlash::class, mappedBy="Laenchere")
+     * @ORM\OneToMany(targetEntity=PlayerFlash::class, mappedBy="laenchere")
      */
     private $playerFlashes;
 
