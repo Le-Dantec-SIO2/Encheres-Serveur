@@ -7,6 +7,8 @@ use App\Utils\Utils;
 use App\Entity\Encherir;
 use App\Entity\PlayerFlash;
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -59,12 +61,15 @@ class PlayerFlashController extends AbstractController
     /**
      * @Route("/api/getAllPlayerFlashByID",name="GetAllPlayerFlashByID")
      */
-    public function GetAllPlayerFlashByID(Request $request, EnchereRepository $enchereRepository)
+    public function GetAllPlayerFlashByID(Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
         $var = $enchereRepository->findOneBy(['id' => $postdata->IdEnchere])->getPlayerFlashes();
+        $users =new ArrayCollection();
+        foreach($var as $user)
+            $users->add($userRepository->findUserById($user->getId())); 
         $response = new Utils;
-        $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
-        return $response->GetJsonResponse($request, $var, $tab);
+        $tab = ['leuser','laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
+        return $response->GetJsonResponse($request, $users, $tab);
     }
 }
