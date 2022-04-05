@@ -29,7 +29,7 @@ class EncheresController extends AbstractController
         else
             $var = isset($postdata->Id) ? $enchereRepository->findEnchere($postdata->Id) : $enchereRepository->findEncheres();
         $response = new Utils;
-        $tab = ['leuser'];
+        $tab = ['PlayerFlash'];
         return $response->GetJsonResponse($request, $var, $tab);
     }
 
