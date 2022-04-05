@@ -82,14 +82,14 @@ class PlayerFlash
         return $this;
     }
 
-    public function getOrdrepassage(): ?int
+    public function getOrdrePassage(): ?int
     {
-        return $this->ordrepassage;
+        return $this->ordrePassage;
     }
 
-    public function setOrdrepassage(int $ordrepassage): self
+    public function setOrdrePassage(int $ordrePassage): self
     {
-        $this->ordrepassage = $ordrepassage;
+        $this->ordrePassage = $ordrePassage;
 
         return $this;
     }
