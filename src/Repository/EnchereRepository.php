@@ -114,7 +114,9 @@ class EnchereRepository extends ServiceEntityRepository
                 ->andWhere('e.id = :enchereId')
                 ->setParameter(':enchereId', $enchereId)
                 ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate', $ladate);
+                ->setParameter('ladate', $ladate)
+                ->getQuery()
+                ->getResult();
 
     }
 
