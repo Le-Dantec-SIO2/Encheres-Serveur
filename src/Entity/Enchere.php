@@ -72,9 +72,15 @@ class Enchere
      */
     private $tableauFlash;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PlayerFlash::class, mappedBy="Laenchere")
+     */
+    private $playerFlashes;
+
     public function __construct()
     {
         $this->lesencherirs = new ArrayCollection();
+        $this->playerFlashes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -222,6 +228,36 @@ class Enchere
     public function setTableauFlash(?string $tableauFlash): self
     {
         $this->tableauFlash = $tableauFlash;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerFlash>
+     */
+    public function getPlayerFlashes(): Collection
+    {
+        return $this->playerFlashes;
+    }
+
+    public function addPlayerFlash(PlayerFlash $playerFlash): self
+    {
+        if (!$this->playerFlashes->contains($playerFlash)) {
+            $this->playerFlashes[] = $playerFlash;
+            $playerFlash->setLaenchere($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerFlash(PlayerFlash $playerFlash): self
+    {
+        if ($this->playerFlashes->removeElement($playerFlash)) {
+            // set the owning side to null (unless already changed)
+            if ($playerFlash->getLaenchere() === $this) {
+                $playerFlash->setLaenchere(null);
+            }
+        }
 
         return $this;
     }
