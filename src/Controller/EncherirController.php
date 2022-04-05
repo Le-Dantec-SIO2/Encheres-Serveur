@@ -169,9 +169,19 @@ class EncherirController extends AbstractController
     }
 
     /**
+     * @Route("/api/postEncherirFlashPass",name="PostEncherirFlashPass")
+     */
+    public function PostEncherirFlashPass(Request $request, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository,UserRepository $userRepository, EntityManagerInterface $em){
+        $postdata = json_decode($request->getContent());
+        //On récupère l'enchère avec l'idenchere passer en paramètre
+        $enchere = $enchereRepository->findOneBy(['id' => $postdata->IdEnchere]);
+        //TODO
+    }
+
+    /**
      * @Route("/api/postEncherirFlash",name="PostEncherirFlash")
      */
-    public function postEncherirFlash(Request $request, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository,UserRepository $userRepository, EntityManagerInterface $em ){
+    public function PostEncherirFlash(Request $request, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository,UserRepository $userRepository, EntityManagerInterface $em ){
          $postdata = json_decode($request->getContent());
             //On récupere l'enchère avec l'iduser passer en paramètre
             $user = $userRepository->findOneBy(['id'=> $postdata->IdUser]);
@@ -179,7 +189,7 @@ class EncherirController extends AbstractController
             $case = $postdata->Case;
             //Teste si le format de la case cliquer est correct
             if(preg_match("/\[[0-3]\,[0-3]\]/",$case)){
-                //On récupere l'enchère avec l'idenchere passer en paramètre
+                //On récupère l'enchère avec l'idenchere passer en paramètre
                 $enchere = $enchereRepository->findOneBy(['id' => $postdata->IdEnchere]);
                 //Valeur aléatoire comprise entre -8 et 8
                 $coeff = random_int(-8,8);
