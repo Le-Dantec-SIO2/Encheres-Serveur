@@ -173,12 +173,19 @@ class EncherirController extends AbstractController
      */
     public function postEncherirFlash(Request $request, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository,UserRepository $userRepository, EntityManagerInterface $em ){
          $postdata = json_decode($request->getContent());
-            $user = $userRepository->findOneBy(['id'=> $postdata->iduser]);
-            $case = $postdata->case;
+            //On récupere l'enchère avec l'iduser passer en paramètre
+            $user = $userRepository->findOneBy(['id'=> $postdata->IdUser]);
+            //On récupère la case cliquer
+            $case = $postdata->Case;
+            //Teste si le format de la case cliquer est correct
             if(preg_match("/\[[0-3]\,[0-3]\]/",$case)){
-                $enchere = $enchereRepository->findOneBy(['id' => $postdata->idenchere]);
-                $coeff = random_int(-10,10);
+                //On récupere l'enchère avec l'idenchere passer en paramètre
+                $enchere = $enchereRepository->findOneBy(['id' => $postdata->IdEnchere]);
+                //Valeur aléatoire comprise entre -8 et 8
+                $coeff = random_int(-8,8);
+                //Récupère le prix actuel (si aucune encherir prendre le prix de départ)
                 $actualPrice = $encherirRepository->findActualPrice($enchere)!=null ? $encherirRepository->findActualPrice($enchere)["prixenchere"] : $enchere->getPrixdepart();
+                //Calcul du nouveau prix avec le pourcentage choisis
                 $newPrice = $actualPrice + ($actualPrice*$coeff/100);
 
                 $tableauFlash = $enchere->getTableauFlash();
@@ -188,7 +195,7 @@ class EncherirController extends AbstractController
                     $encherir = new Encherir();
                     $encherir->setLeuser($user);
                     $encherir->setLaenchere($enchere);
-                    $encherir->setPrixenchere($newPrice);
+                    $encherir->setPrixenchere(intval($newPrice));
                     $encherir->setDateenchere(new \DateTime('now'));
 
                     $em->persist($encherir);
