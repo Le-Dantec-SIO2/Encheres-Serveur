@@ -26,7 +26,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PlayerFlashController extends AbstractController
 {
  /**
-     * Permet d'encherir sur une enchère
+     * Permet d'ajouter un user a la liste des joueurs sur une enchère flash
      * Retourne une réponse http
      * @Route("/api/postPlayerFlash", name="PostPlayerFlash")
      */
