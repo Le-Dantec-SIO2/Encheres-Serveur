@@ -22,23 +22,23 @@ class PlayerFlash
     /**
      * @ORM\ManyToMany(targetEntity=user::class)
      */
-    private $Leuser;
+    private $leuser;
 
     /**
      * @ORM\ManyToOne(targetEntity=enchere::class, inversedBy="playerFlashes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Laenchere;
+    private $laenchere;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $OrdrePassage;
+    private $ordrePassage;
 
 
     public function __construct()
     {
-        $this->Leuser = new ArrayCollection();
+        $this->leuser = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,13 +51,13 @@ class PlayerFlash
      */
     public function getLeuser(): Collection
     {
-        return $this->Leuser;
+        return $this->leuser;
     }
 
     public function addLeuser(user $leuser): self
     {
-        if (!$this->Leuser->contains($leuser)) {
-            $this->Leuser[] = $leuser;
+        if (!$this->leuser->contains($leuser)) {
+            $this->leuser[] = $leuser;
         }
 
         return $this;
@@ -65,31 +65,31 @@ class PlayerFlash
 
     public function removeLeuser(user $leuser): self
     {
-        $this->Leuser->removeElement($leuser);
+        $this->leuser->removeElement($leuser);
 
         return $this;
     }
 
     public function getLaenchere(): ?enchere
     {
-        return $this->Laenchere;
+        return $this->laenchere;
     }
 
-    public function setLaenchere(?enchere $Laenchere): self
+    public function setLaenchere(?enchere $laenchere): self
     {
-        $this->Laenchere = $Laenchere;
+        $this->laenchere = $laenchere;
 
         return $this;
     }
 
-    public function getOrdrePassage(): ?int
+    public function getOrdrepassage(): ?int
     {
-        return $this->OrdrePassage;
+        return $this->ordrepassage;
     }
 
-    public function setOrdrePassage(int $OrdrePassage): self
+    public function setOrdrepassage(int $ordrepassage): self
     {
-        $this->OrdrePassage = $OrdrePassage;
+        $this->ordrepassage = $ordrepassage;
 
         return $this;
     }
