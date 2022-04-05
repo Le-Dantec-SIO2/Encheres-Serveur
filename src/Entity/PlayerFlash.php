@@ -30,12 +30,6 @@ class PlayerFlash
      */
     private $laenchere;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $ordrePassage;
-
-
     public function __construct()
     {
         $this->leuser = new ArrayCollection();
@@ -78,18 +72,6 @@ class PlayerFlash
     public function setLaenchere(?enchere $laenchere): self
     {
         $this->laenchere = $laenchere;
-
-        return $this;
-    }
-
-    public function getOrdrePassage(): ?int
-    {
-        return $this->ordrePassage;
-    }
-
-    public function setOrdrePassage(int $ordrePassage): self
-    {
-        $this->ordrePassage = $ordrePassage;
 
         return $this;
     }
