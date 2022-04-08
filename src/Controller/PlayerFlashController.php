@@ -102,5 +102,6 @@ class PlayerFlashController extends AbstractController
         //On renvoie une réponse pour savoir si l'opération à réussie
         $response = new Response($nouvelleEnchere);
         $response->headers->set('Content-Type', 'text/html');
+        return $response;
     }
 }
