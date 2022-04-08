@@ -47,26 +47,33 @@ class PlayerFlashRepository extends ServiceEntityRepository
         ;
     }
     */
-     public function findJoueur($value): ?PlayerFlash
+     public function findJoueur($value1,$value2): ?PlayerFlash
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.id > :val')
+            ->innerJoin('p.laenchere', 'u')
+            ->andWhere('p.id > :val1')
+            ->andWhere('u.id = :val2')
             ->orderBy('p.id','ASC')
-            ->setParameter('val', $value)
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    public function findJoueurOne(): ?PlayerFlash
+    public function findJoueurOne($value2): ?PlayerFlash
     {
         return $this->createQueryBuilder('p')
             
+            return $this->createQueryBuilder('p')
+            ->innerJoin('p.laenchere', 'u')
+            ->andWhere('u.id = :val2')
             ->orderBy('p.id','ASC')
-            ->setParameter('val', $value)
+            ->setParameter('val2', $value2)
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
+        ;
         ;
     }
 }
