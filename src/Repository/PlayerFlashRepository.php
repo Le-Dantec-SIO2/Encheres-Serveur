@@ -63,8 +63,7 @@ class PlayerFlashRepository extends ServiceEntityRepository
     }
     public function findJoueurOne($value2): ?PlayerFlash
     {
-        return $this->createQueryBuilder('p')
-            
+        
             return $this->createQueryBuilder('p')
             ->innerJoin('p.laenchere', 'u')
             ->andWhere('u.id = :val2')
