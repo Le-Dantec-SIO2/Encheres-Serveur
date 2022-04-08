@@ -74,4 +74,33 @@ class PlayerFlashController extends AbstractController
         $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
         return $response->GetJsonResponse($request, $users, $tab);
     }
+
+    /**
+     * @Route("/api/postEncherirFlash",name="PostEncherirFlash")
+     */
+    public function PostEncherirFlash(Request $request, EnchereRepository $enchereRepository, EncherirRepository $encherirRepository, UserRepository $userRepository)
+    {
+    //On récupère les données envoyées en post
+        $postdata = json_decode($request->getContent());
+
+        //On recupere le nouveau tableau recalculé côté client
+        $TableauFlash = $postdata->TableauFlash;
+
+        //On cherche l'utilisateur
+        $user = $userRepository->find($postdata->IdUser);
+
+        //On cherche l'enchère
+        $enchere = $enchereRepository->find($postdata->IdEnchere);
+
+        //On cherche le montant de la derniere l'enchère
+        $derniereEnchere = $encherirRepository->findActualPrice($postdata->IdEnchere);
+
+        //On calcule la valeur de la nouvelle enchère
+        $nouvelleEnchere = $enchere->GetMontantNouvelleEnchere($derniereEnchere,0.08)
+       
+        //on renvoie
+        //On renvoie une réponse pour savoir si l'opération à réussie
+        $response = new Response($nouvelleEnchere);
+        $response->headers->set('Content-Type', 'text/html');
+    }
 }

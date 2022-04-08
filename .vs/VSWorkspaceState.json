@@ -3,11 +3,8 @@
     "",
     "\\config",
     "\\src",
-    "\\src\\Controller",
-    "\\src\\Entity",
-    "\\src\\Repository",
-    "\\src\\Utils"
+    "\\src\\Controller"
   ],
-  "SelectedNode": "\\src\\Controller\\EncherirController.php",
+  "SelectedNode": "\\src\\Controller\\PlayerFlashController.php",
   "PreviewInSolutionExplorer": false
 }
