@@ -264,6 +264,6 @@ class Enchere
 
     public function GetMontantNouvelleEnchere(Enchere $paramEnchere, float $paramTaux)
     {
-      return round( rand(-$paramTaux,+$paramTaux) * $paramEnchere) + $paramEnchere;
+      return $this->round( rand(-$paramTaux,+$paramTaux) * $paramEnchere) + $paramEnchere;
     }
 }
