@@ -275,6 +275,6 @@ class Enchere
       {
 	    $retour=   $paramEnchere-$retour;
       }
-      return $retour;
+      return round($retour);
     }
 }
