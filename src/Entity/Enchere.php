@@ -264,16 +264,16 @@ class Enchere
 
     public function GetMontantNouvelleEnchere(float $paramEnchere, float $paramTaux)
     {
-      int retour = round( rand(0,$paramTaux) * $paramEnchere);
-      int rnd = round( rand(0,9);
+      int $retour = round( rand(0,$paramTaux) * $paramEnchere);
+      int $rnd = round( rand(0,9);
       if(rnd>4)
       {
-         return   $paramEnchere+retour;
+         $retour=   $paramEnchere+retour;
       }
       else 
       {
-	    return   $paramEnchere-retour;
+	    $retour=   $paramEnchere-retour;
       }
-
+      return $retour;
     }
 }
