@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\PlayerFlash;
+use App\Entity\Enchere;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
