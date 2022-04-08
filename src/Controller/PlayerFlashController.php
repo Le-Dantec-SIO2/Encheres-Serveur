@@ -96,7 +96,7 @@ class PlayerFlashController extends AbstractController
         $derniereEnchere = $encherirRepository->findActualPrice($postdata->IdEnchere);
 
         //On calcule la valeur de la nouvelle enchère
-        $nouvelleEnchere = $enchere->GetMontantNouvelleEnchere($derniereEnchere,0.08);
+        $nouvelleEnchere = $enchere->GetMontantNouvelleEnchere((integer)$derniereEnchere,0.08);
        
         //on renvoie
         //On renvoie une réponse pour savoir si l'opération à réussie
