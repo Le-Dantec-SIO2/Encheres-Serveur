@@ -268,13 +268,10 @@ class Enchere
 
        $rnd = round( rand(0,9));
       if($rnd>4)
-      {
          $retour=   $paramEnchere+$retour;
-      }
       else 
-      {
 	    $retour=   $paramEnchere-$retour;
-      }
+
       return round($retour);
     }
 }

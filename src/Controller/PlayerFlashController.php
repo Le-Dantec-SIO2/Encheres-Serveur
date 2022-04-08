@@ -76,9 +76,9 @@ class PlayerFlashController extends AbstractController
     }
 
     /**
-     * @Route("/api/postEncherirFlash",name="PostEncherirFlash")
+     * @Route("/api/postEncherirFlashManuel",name="PostEncherirFlashManuel")
      */
-    public function PostEncherirFlash(Request $request, EnchereRepository $enchereRepository, EncherirRepository $encherirRepository, UserRepository $userRepository)
+    public function PostEncherirFlashManuel(Request $request, EnchereRepository $enchereRepository, EncherirRepository $encherirRepository, UserRepository $userRepository, EntityManagerInterface $em)
     {
     //On récupère les données envoyées en post
         $postdata = json_decode($request->getContent());
@@ -95,12 +95,114 @@ class PlayerFlashController extends AbstractController
         //On cherche le montant de la derniere l'enchère
         $derniereEnchere = $encherirRepository->findActualPrice($postdata->IdEnchere);
         
+        // On verifiequ'une premiere enchere a deja ete passée
+        if(isset($derniereEnchere))
         //On calcule la valeur de la nouvelle enchère
         $nouvelleEnchere = $enchere->GetMontantNouvelleEnchere($derniereEnchere['prixenchere'],38);
+        else
+        //On calcule la valeur de la nouvelle enchère avec le prix de depart
+        $nouvelleEnchere = $enchere->GetMontantNouvelleEnchere($enchere->getPrixdepart(),38);
        
+        //On INSERT la nouvelle enchere
+        $encherir = new Encherir();
+        $encherir->setLeuser($user);
+        $encherir->setLaenchere($enchere);
+        $encherir->setPrixenchere($nouvelleEnchere);
+        $encherir->setDateenchere(new \DateTime('now'));
+
+        $em->persist($encherir);
+        $em->flush();
+
+        //On UPDATE le TABLEAU FLASH
+        $enchere->setTableauFlash($TableauFlash);
+        $em->persist($enchere);
+        $em->flush();
+
         //On renvoie une réponse pour savoir si l'opération à réussie
-        $response = new Response($nouvelleEnchere);
+        $response = new Response("ok");
         $response->headers->set('Content-Type', 'text/html');
         return $response;
+    }
+
+    /**
+     * @Route("/api/postEncherirFlashJePasse",name="PostEncherirFlashJePasse")
+     */
+    public function PostEncherirFlashJePasse(Request $request, EnchereRepository $enchereRepository, EncherirRepository $encherirRepository, UserRepository $userRepository, EntityManagerInterface $em)
+    {
+    //On récupère les données envoyées en post
+        $postdata = json_decode($request->getContent());
+
+        //On recupere le nouveau tableau recalculé côté client
+        $TableauFlash = $postdata->TableauFlash;
+
+        //On cherche l'utilisateur
+        $user = $userRepository->find($postdata->IdUser);
+
+        //On cherche l'enchère
+        $enchere = $enchereRepository->find($postdata->IdEnchere);
+
+        //On cherche le montant de la derniere l'enchère
+        $derniereEnchere = $encherirRepository->findActualPrice($postdata->IdEnchere);
+        
+        // On verifiequ'une premiere enchere a deja ete passée
+        if(isset($derniereEnchere))
+        //On calcule la valeur de la nouvelle enchère
+        $nouvelleEnchere = $derniereEnchere;
+        else
+        //On calcule la valeur de la nouvelle enchère avec le prix de depart
+        $nouvelleEnchere = $derniereEnchere;
+       
+        //On INSERT la nouvelle enchere
+        $encherir = new Encherir();
+        $encherir->setLeuser($user);
+        $encherir->setLaenchere($enchere);
+        $encherir->setPrixenchere($nouvelleEnchere);
+        $encherir->setDateenchere(new \DateTime('now'));
+
+        $em->persist($encherir);
+        $em->flush();
+
+        //On UPDATE le TABLEAU FLASH
+        $enchere->setTableauFlash($TableauFlash);
+        $em->persist($enchere);
+        $em->flush();
+
+        //On marque le prochain joueurs
+
+
+        //On renvoie une réponse pour savoir si l'opération à réussie
+        $response = new Response("ok");
+        $response->headers->set('Content-Type', 'text/html');
+        return $response;
+    }
+        /**
+     * @Route("/api/getJoueurActif",name="GetJoueurActif")
+     */
+    public function GetJoueurActif(Request $request, PlayerFlashRepository $playerFlashRepository,EntityManagerInterface $em)
+    {   
+        //On récupère les données envoyées en post
+        $postdata = json_decode($request->getContent());
+
+        //On cherche l'utilisateur
+        $playerAncien = $playerFlashRepositoryeRepository->find($postdata->Id);
+
+        //On Recherche le joueur actif suivant
+        $playernouveau = $playerFlashRepositoryeRepository->findJoueur($postdata->Id);
+        if(!isset($playernouveau))
+         $playernouveau = $playerFlashRepositoryeRepository->findJoueurOne();
+
+
+        //On decoche le tag de l'ancien joueur
+        $playerAncien->setTag("Non");
+        $em->persist($enchere);
+        $em->flush();
+
+         //On coche le tag du nouveau joueur
+        $playernouveau->setTag("Oui");
+        $em->persist($enchere);
+        $em->flush();
+
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $playernouveau);
     }
 }
