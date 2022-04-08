@@ -74,6 +74,5 @@ class PlayerFlashRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
-        ;
     }
 }
