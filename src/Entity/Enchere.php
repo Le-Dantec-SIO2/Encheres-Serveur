@@ -267,7 +267,7 @@ class Enchere
        $retour = ( rand(0,$paramTaux) * $paramEnchere)/100;
 
        $rnd = round( rand(0,9));
-      if(rnd>4)
+      if($rnd>4)
       {
          $retour=   $paramEnchere+retour;
       }
