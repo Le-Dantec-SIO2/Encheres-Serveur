@@ -20,12 +20,12 @@ class PlayerFlash
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=user::class)
+     * @ORM\ManyToMany(targetEntity=User::class)
      */
     private $leuser;
 
     /**
-     * @ORM\ManyToOne(targetEntity=enchere::class, inversedBy="playerFlashes")
+     * @ORM\ManyToOne(targetEntity=Enchere::class, inversedBy="playerFlashes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $laenchere;
@@ -46,14 +46,14 @@ class PlayerFlash
     }
 
     /**
-     * @return Collection<int, user>
+     * @return Collection<int, User>
      */
     public function getLeuser(): Collection
     {
         return $this->leuser;
     }
 
-    public function addLeuser(user $leuser): self
+    public function addLeuser(User $leuser): self
     {
         if (!$this->leuser->contains($leuser)) {
             $this->leuser[] = $leuser;
@@ -62,19 +62,19 @@ class PlayerFlash
         return $this;
     }
 
-    public function removeLeuser(user $leuser): self
+    public function removeLeuser(User $leuser): self
     {
         $this->leuser->removeElement($leuser);
 
         return $this;
     }
 
-    public function getLaenchere(): ?enchere
+    public function getLaenchere(): ?Enchere
     {
         return $this->laenchere;
     }
 
-    public function setLaenchere(?enchere $laenchere): self
+    public function setLaenchere(?Enchere $laenchere): self
     {
         $this->laenchere = $laenchere;
 
