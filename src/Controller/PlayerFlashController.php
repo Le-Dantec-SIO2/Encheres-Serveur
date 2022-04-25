@@ -78,15 +78,15 @@ class PlayerFlashController extends AbstractController
         /**
      * @Route("/api/getPlayerFlashByID",name="GetPlayerFlashByID")
      */
-    public function GetAllPlayerFlashByID(Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
-    {
-        $postdata = json_decode($request->getContent());
-        $var = $playerFlashRepositoryeRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
+    // public function GetAllPlayerFlashByID(Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
+    // {
+    //     $postdata = json_decode($request->getContent());
+    //     $var = $playerFlashRepositoryeRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
 
-        $response = new Utils;
-        $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
-        return $response->GetJsonResponse($request, $var, $tab);
-    }
+    //     $response = new Utils;
+    //     $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
+    //     return $response->GetJsonResponse($request, $var, $tab);
+    // }
 
     /**
      * @Route("/api/postEncherirFlashManuel",name="PostEncherirFlashManuel")
@@ -193,7 +193,7 @@ class PlayerFlashController extends AbstractController
         $playerAncien = $playerFlashRepository->find($postdata->IdEnchere);
 
         //On Recherche le joueur actif suivant
-        $playernouveau = $playerFlashRepositoryeRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
+        $playernouveau = $playerFlashRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
         if(!isset($playernouveau))
          $playernouveau = $playerFlashRepository->findJoueurOne($postdata->IdEnchere);
 
