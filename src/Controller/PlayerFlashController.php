@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Enchere;
 use App\Utils\Utils;
 use App\Entity\Encherir;
 use App\Entity\PlayerFlash;
-use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
