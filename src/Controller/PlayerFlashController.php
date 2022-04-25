@@ -75,6 +75,19 @@ class PlayerFlashController extends AbstractController
         return $response->GetJsonResponse($request, $users, $tab);
     }
 
+        /**
+     * @Route("/api/getPlayerFlashByID",name="GetPlayerFlashByID")
+     */
+    public function GetAllPlayerFlashByID(Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
+    {
+        $postdata = json_decode($request->getContent());
+        $var = $playerFlashRepositoryeRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
+
+        $response = new Utils;
+        $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
+        return $response->GetJsonResponse($request, $var, $tab);
+    }
+
     /**
      * @Route("/api/postEncherirFlashManuel",name="PostEncherirFlashManuel")
      */
@@ -132,9 +145,6 @@ class PlayerFlashController extends AbstractController
     //On récupère les données envoyées en post
         $postdata = json_decode($request->getContent());
 
-        //On recupere le nouveau tableau recalculé côté client
-        $TableauFlash = $postdata->TableauFlash;
-
         //On cherche l'utilisateur
         $user = $userRepository->find($postdata->IdUser);
 
@@ -162,10 +172,6 @@ class PlayerFlashController extends AbstractController
         $em->persist($encherir);
         $em->flush();
 
-        //On UPDATE le TABLEAU FLASH
-        $enchere->setTableauFlash($TableauFlash);
-        $em->persist($enchere);
-        $em->flush();
 
         //On marque le prochain joueurs
 
@@ -188,8 +194,6 @@ class PlayerFlashController extends AbstractController
 
         //On Recherche le joueur actif suivant
         $playernouveau = $playerFlashRepositoryeRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
-        dump($playernouveau);
-        die();
         if(!isset($playernouveau))
          $playernouveau = $playerFlashRepositoryeRepository->findJoueurOne($postdata->IdEnchere);
 
