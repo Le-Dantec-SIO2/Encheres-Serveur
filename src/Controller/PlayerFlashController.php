@@ -75,17 +75,7 @@ class PlayerFlashController extends AbstractController
         return $response->GetJsonResponse($request, $users, $tab);
     }
 
-        /**
-     * @Route("/api/getPlayerFlashByID",name="GetPlayerFlashByID")
-     */
-     public function GetPlayerFlashByID(Request $request, PlayerFlashRepository $playerFlashRepository)
-     {
-         $postdata = json_decode($request->getContent());
-         $var = $playerFlashRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
 
-         $response = new Utils;
-        return $response->GetJsonResponse($request, $var);
-     }
 
     /**
      * @Route("/api/postEncherirFlashManuel",name="PostEncherirFlashManuel")
@@ -191,6 +181,7 @@ class PlayerFlashController extends AbstractController
         //On cherche l'utilisateur
         $playerAncien = $playerFlashRepository->find($postdata->Id);
 
+
         //On Recherche le joueur actif suivant
         $playernouveau = $playerFlashRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
         if(!isset($playernouveau))
@@ -207,8 +198,8 @@ class PlayerFlashController extends AbstractController
         $em->persist($playernouveau);
         $em->flush();
 
-         $response = new Response("ok");
-        $response->headers->set('Content-Type', 'text/html');
-        return $response;
+        $response = new Utils;
+         $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
+        return $response->GetJsonResponse($request, $playernouveau,$tab);
     }
 }
