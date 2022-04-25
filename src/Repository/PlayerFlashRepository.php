@@ -53,8 +53,8 @@ class PlayerFlashRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.laenchere', 'u')
-            ->andWhere('p.id > :val1')
-            ->andWhere('u.id = :val2')
+            ->andWhere('p.id > :val2')
+            ->andWhere('u.id = :val1')
             ->orderBy('p.id','ASC')
             ->setParameter('val1', $value1)
             ->setParameter('val2', $value2)

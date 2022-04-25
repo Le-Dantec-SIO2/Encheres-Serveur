@@ -197,7 +197,7 @@ class PlayerFlashController extends AbstractController
         $em->flush();
 
         $response = new Utils;
-         $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
+         $tab = ['laenchere','leuser'];
         return $response->GetJsonResponse($request, $playernouveau,$tab);
     }
 }
