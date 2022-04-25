@@ -178,8 +178,7 @@ class PlayerFlashController extends AbstractController
 
         //On cherche l'utilisateur
         $playerAncien = $playerFlashRepository->find($postdata->Id);
-        dump($playerAncien);
-        die();
+    
 
         //On Recherche le joueur actif suivant
         $playernouveau = $playerFlashRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
