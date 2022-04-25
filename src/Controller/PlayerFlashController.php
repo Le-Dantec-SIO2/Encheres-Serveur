@@ -190,22 +190,22 @@ class PlayerFlashController extends AbstractController
         $postdata = json_decode($request->getContent());
 
         //On cherche l'utilisateur
-        $playerAncien = $playerFlashRepositoryeRepository->find($postdata->IdEnchere);
+        $playerAncien = $playerFlashRepository->find($postdata->IdEnchere);
 
         //On Recherche le joueur actif suivant
         $playernouveau = $playerFlashRepositoryeRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
         if(!isset($playernouveau))
-         $playernouveau = $playerFlashRepositoryeRepository->findJoueurOne($postdata->IdEnchere);
+         $playernouveau = $playerFlashRepository->findJoueurOne($postdata->IdEnchere);
 
 
         //On decoche le tag de l'ancien joueur
-        $playerAncien->setTag("Non");
-        $em->persist($enchere);
+        $playerAncien->setTag(False);
+        $em->persist($playerAncien);
         $em->flush();
 
          //On coche le tag du nouveau joueur
-        $playernouveau->setTag("Oui");
-        $em->persist($enchere);
+        $playernouveau->setTag(True);
+        $em->persist($playernouveau);
         $em->flush();
 
         $response = new Utils;

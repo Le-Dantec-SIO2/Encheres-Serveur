@@ -30,6 +30,11 @@ class PlayerFlash
      */
     private $laenchere;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $tag;
+
     public function __construct()
     {
         $this->leuser = new ArrayCollection();
@@ -72,6 +77,18 @@ class PlayerFlash
     public function setLaenchere(?enchere $laenchere): self
     {
         $this->laenchere = $laenchere;
+
+        return $this;
+    }
+
+    public function getTag(): ?bool
+    {
+        return $this->tag;
+    }
+
+    public function setTag(bool $tag): self
+    {
+        $this->tag = $tag;
 
         return $this;
     }
