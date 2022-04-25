@@ -170,5 +170,36 @@ class PlayerFlashController extends AbstractController
         $response->headers->set('Content-Type', 'text/html');
         return $response;
     }
-       
+        /**
+     * @Route("/api/getJoueurActif",name="GetJoueurActif")
+     */
+    public function GetJoueurActif(Request $request, PlayerFlashRepository $playerFlashRepository,EntityManagerInterface $em)
+    {   
+        //On récupère les données envoyées en post
+        $postdata = json_decode($request->getContent());
+
+        //On cherche l'utilisateur
+        $playerAncien = $playerFlashRepository->find($postdata->Id);
+
+
+        //On Recherche le joueur actif suivant
+        $playernouveau = $playerFlashRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
+        if(!isset($playernouveau))
+         $playernouveau = $playerFlashRepository->findJoueurOne($postdata->IdEnchere);
+
+
+        //On decoche le tag de l'ancien joueur
+        $playerAncien->setTag(False);
+        $em->persist($playerAncien);
+        $em->flush();
+
+         //On coche le tag du nouveau joueur
+        $playernouveau->setTag(True);
+        $em->persist($playernouveau);
+        $em->flush();
+
+        $response = new Utils;
+         $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
+        return $response->GetJsonResponse($request, $playernouveau,$tab);
+    }
 }
