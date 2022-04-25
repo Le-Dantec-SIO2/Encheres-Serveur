@@ -83,9 +83,8 @@ class PlayerFlashController extends AbstractController
          $postdata = json_decode($request->getContent());
          $var = $playerFlashRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
 
-        $response = new Utils;
-         $tab = ['laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
-        return $response->GetJsonResponse($request, $var, $tab);
+         $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
      }
 
     /**
