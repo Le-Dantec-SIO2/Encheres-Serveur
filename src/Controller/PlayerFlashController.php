@@ -78,7 +78,7 @@ class PlayerFlashController extends AbstractController
         /**
      * @Route("/api/getPlayerFlashByID",name="GetPlayerFlashByID")
      */
-    public function GetAllPlayerFlashByID(Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
+    public function GetPlayerFlashByID(Request $request, EnchereRepository $enchereRepository, UserRepository $userRepository)
     {
         $postdata = json_decode($request->getContent());
         $var = $playerFlashRepositoryeRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
