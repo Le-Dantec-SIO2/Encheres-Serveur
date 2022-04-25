@@ -189,7 +189,7 @@ class PlayerFlashController extends AbstractController
         $postdata = json_decode($request->getContent());
 
         //On cherche l'utilisateur
-        $playerAncien = $playerFlashRepository->find($postdata->IdEnchere);
+        $playerAncien = $playerFlashRepository->find($postdata->Id);
 
         //On Recherche le joueur actif suivant
         $playernouveau = $playerFlashRepository->findJoueur($postdata->IdEnchere,$postdata->Id);
