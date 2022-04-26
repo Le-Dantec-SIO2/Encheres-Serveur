@@ -49,11 +49,10 @@ class EncherirRepository extends ServiceEntityRepository
             ->innerJoin('enleuser','u')
             ->andWhere('en.laenchere = :laenchere')
             ->groupBy('en.id')
-            ->having('COUNT(en.id)>0')
             ->select('u.id, u.pseudo, CAST(u.photo AS NCHAR) AS photo')
             ->setParameter(':laenchere',$enchere)
             ->getQuery()
-            ->getResult();                                   
+            ->getOneOrNullResult();                                   
     }
 
     // /**
