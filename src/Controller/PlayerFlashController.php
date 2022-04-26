@@ -46,7 +46,7 @@ class PlayerFlashController extends AbstractController
         $playerFlash = new PlayerFlash();
         $playerFlash->addLeuser($user);
         $playerFlash->setLaenchere($enchere);
-
+        $playerFlash->SetTag(False);
         $em->persist($playerFlash);
         $em->flush();
 
