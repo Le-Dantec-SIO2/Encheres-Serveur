@@ -60,7 +60,7 @@ class PlayerFlashRepository extends ServiceEntityRepository
             ->setParameter('val1', $value1)
             ->setParameter('val2', $value2)
             ->setMaxResults(1)
-            ->select('p.id','l.id AS  id_user','u.id AS  id_enchere','l.pseudo', 'p.tag', 'CAST(l.photo AS NCHAR) AS photo')
+            ->select('p.id','l.id AS  id_user','u.id AS  id_enchere','l.pseudo', 'p.tag')
 
             ->getQuery()
             ->getOneOrNullResult()
