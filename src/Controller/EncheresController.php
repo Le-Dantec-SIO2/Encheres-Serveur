@@ -101,7 +101,6 @@ class EncheresController extends AbstractController
      */
     public function GetProchaineEnchere(Request $request, EnchereRepository $enchereRepository){
         $var = $enchereRepository->findProchaineEnchere();
-        dd($var);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
