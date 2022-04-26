@@ -52,6 +52,7 @@ class PlayerFlashRepository extends ServiceEntityRepository
      public function findJoueur($value1,$value2): ?PlayerFlash
     {
         return $this->createQueryBuilder('p')
+            ->innerJoin('p.leuser', 'l')
             ->innerJoin('p.laenchere', 'u')
             ->andWhere('p.id > :val2')
             ->andWhere('u.id = :val1')
@@ -59,6 +60,8 @@ class PlayerFlashRepository extends ServiceEntityRepository
             ->setParameter('val1', $value1)
             ->setParameter('val2', $value2)
             ->setMaxResults(1)
+            ->select('p.id','l.pseudo', 'p.tag', 'CAST(l.photo AS NCHAR) AS photo')
+
             ->getQuery()
             ->getOneOrNullResult()
         ;
