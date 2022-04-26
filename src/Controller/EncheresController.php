@@ -45,7 +45,7 @@ class EncheresController extends AbstractController
         else
             $var = isset($postdata -> Id) ? $enchereRepository->findEnchereEnCours($postdata->Id) : $enchereRepository->findEncheresEnCours();
         
-        $counts = array_count_values($enchereRepository->findEncheresInverseesFinies());
+        $counts = array_count_values(array_column($enchereRepository->findEncheresInverseesFinies(),'name'));
         $result = array_filter($var, function($o) use (&$counts) {
             return empty($counts[$o]) || !$counts[$o]--;
         });
