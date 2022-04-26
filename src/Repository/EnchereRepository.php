@@ -195,7 +195,6 @@ class EnchereRepository extends ServiceEntityRepository
             ->andWhere('e.datedebut > CURRENT_DATE()')
             ->having('DATE_DIFF(e.datedebut, CURRENT_TIMESTAMP())>0')
             ->orderBy('DATE_DIFF( e.datedebut, CURRENT_TIMESTAMP())')
-            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
