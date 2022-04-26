@@ -26,14 +26,11 @@ class EnchereRepository extends ServiceEntityRepository
 
     public function findEncheres()
     {
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
         return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
                 ->innerJoin('e.letypeenchere','t')
-                ->andWhere('e.datefin > :ladate')
+                ->andWhere('e.datefin > CURRENT_TIMESTAMP()')
                 ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate',$ladate)
                 ->getQuery()
                 ->getResult()
             ;
@@ -41,16 +38,13 @@ class EnchereRepository extends ServiceEntityRepository
     }
     public function findEncheresByType($IdTypeEnchere)
     {
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
         return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
                 ->innerJoin('e.letypeenchere','t')
-                ->andWhere('e.datefin > :ladate')
+                ->andWhere('e.datefin > CURRENT_TIMESTAMP()')
                 ->andWhere('t.id = :IdTypeEnchere')
                 ->setParameter(':IdTypeEnchere',$IdTypeEnchere)
                 ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate',$ladate)
                 ->getQuery()
                 ->getResult()
             ;
@@ -58,17 +52,14 @@ class EnchereRepository extends ServiceEntityRepository
     }
     public function findEnchere($enchereId)
     {
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
             return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
                 ->innerJoin('e.letypeenchere','t')
                 
-                ->andWhere('e.datefin > :ladate')
+                ->andWhere('e.datefin > CURRENT_TIMESTAMP()')
                 ->andWhere('e.id = :enchereId')
                 ->setParameter(':enchereId',$enchereId)
                 ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate',$ladate)
                 ->getQuery()
                 ->getOneOrNullResult()
             ;
@@ -77,14 +68,11 @@ class EnchereRepository extends ServiceEntityRepository
 
     public function findEncheresEnCours()
     {
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
         return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
                 ->innerJoin('e.letypeenchere', 't')
-                ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
+                ->andWhere('CURRENT_TIMESTAMP() BETWEEN e.datedebut AND e.datefin')
                 ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate', $ladate)
                 ->getQuery()
                 ->getResult();
     }
@@ -102,46 +90,37 @@ class EnchereRepository extends ServiceEntityRepository
     }
 
     public function findEncheresEnCoursByType($IdTypeEnchere){
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
             return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
                 ->innerJoin('e.letypeenchere', 't')
-                ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
+                ->andWhere('CURRENT_TIMESTAMP() BETWEEN e.datedebut AND e.datefin')
                 ->andWhere('t.id = :IdTypeEnchere')
                 ->setParameter(':IdTypeEnchere', $IdTypeEnchere)
                 ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate', $ladate)
                 ->getQuery()
                 ->getResult();
     }
 
     public function findEnchereEnCours($enchereId)
     {
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
             return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
                 ->innerJoin('e.letypeenchere', 't')
-                ->andWhere(':ladate BETWEEN e.datedebut AND e.datefin')
+                ->andWhere('CURRENT_TIMESTAMP() BETWEEN e.datedebut AND e.datefin')
                 ->andWhere('e.id = :enchereId')
                 ->setParameter(':enchereId', $enchereId)
                 ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate', $ladate)
                 ->getQuery()
                 ->getResult();
 
     }
 
     public function findEncheresFutures(){
-        $ladate = new \DateTime('now');
-        $ladate = $ladate->format('Y-m-d');
         return $this->createQueryBuilder('e')
                 ->innerjoin('e.leproduit', 'p')
                 ->innerJoin('e.letypeenchere', 't')
-                ->andWhere(':ladate < e.datedebut')
+                ->andWhere('CURRENT_TIMESTAMP() < e.datedebut')
                 ->orderBy('e.datedebut', 'ASC')
-                ->setParameter('ladate', $ladate)
                 ->getQuery()
                 ->getResult();
     }
