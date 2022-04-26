@@ -51,7 +51,7 @@ class PlayerFlashController extends AbstractController
         $em->flush();
 
         //On renvoie une réponse pour savoir si l'opération à réussie
-        $response = new Response('ok');
+        $response = new Response($playerFlash->getId());
         $response->headers->set('Content-Type', 'text/html');
 
         return $response;
