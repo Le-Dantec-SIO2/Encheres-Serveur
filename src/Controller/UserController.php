@@ -33,7 +33,7 @@ class UserController extends AbstractController
             return Utils::ErrorMissingArguments();
 
         $enchere = $enchereRepository->findOneBy(['id' => $id]);
-        $var = $encherirRepository->findGagnantEnchere($enchere);
+        $var = $enchere->getLetypeenchere()->getId() == 2 ? $encherirRepository->findGagnantInverse($enchere) : $encherirRepository->findGagnantEnchere($enchere);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }

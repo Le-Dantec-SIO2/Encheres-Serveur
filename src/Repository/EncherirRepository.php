@@ -43,6 +43,18 @@ class EncherirRepository extends ServiceEntityRepository
             return null;
         }
     }
+
+    public function findGagnantInverse($enchere){
+        return $this->createQueryBuilder('en')
+            ->innerJoin('en.leuser','u')
+            ->andWhere('en.laenchere = :laenchere')
+            ->groupBy('en.id')
+            ->select('u.id, u.pseudo, CAST(u.photo AS NCHAR) AS photo')
+            ->setParameter(':laenchere',$enchere)
+            ->getQuery()
+            ->getOneOrNullResult();                                   
+    }
+
     // /**
     //  * @return The actual price of the enchere given in parameters
     //  */
