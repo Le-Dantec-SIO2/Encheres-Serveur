@@ -53,7 +53,7 @@ class EncherirRepository extends ServiceEntityRepository
             ->select('u.id, u.pseudo, CAST(u.photo AS NCHAR) AS photo')
             ->setParameter(':laenchere',$enchere)
             ->getQuery()
-            ->getOneOrNullResult();                                   
+            ->getResult();                                   
     }
 
     // /**
