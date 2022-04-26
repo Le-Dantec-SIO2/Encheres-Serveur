@@ -46,7 +46,7 @@ class EncherirRepository extends ServiceEntityRepository
 
     public function findGagnantInverse($enchere){
         return $this->createQueryBuilder('en')
-            ->innerJoin('enleuser','u')
+            ->innerJoin('en.leuser','u')
             ->andWhere('en.laenchere = :laenchere')
             ->groupBy('en.id')
             ->select('u.id, u.pseudo, CAST(u.photo AS NCHAR) AS photo')
