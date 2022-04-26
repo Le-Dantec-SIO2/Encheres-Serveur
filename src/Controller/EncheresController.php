@@ -44,6 +44,13 @@ class EncheresController extends AbstractController
             $var = isset($postdata -> Id) ? $enchereRepository->findEnchereEnCours($postdata->Id) : $enchereRepository->findEncheresEnCoursByType($postdata->IdTypeEnchere);
         else
             $var = isset($postdata -> Id) ? $enchereRepository->findEnchereEnCours($postdata->Id) : $enchereRepository->findEncheresEnCours();
+        
+        $var = array_udiff($var, $enchereRepository->findEncheresInverseesFinies(),
+            function ($obj_a, $obj_b) {
+                return $obj_a->id - $obj_b->id;
+            }
+        );
+       
         //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
         $response = new Utils;
         $tab = ['leuser','laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
