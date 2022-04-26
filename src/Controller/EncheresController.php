@@ -47,6 +47,7 @@ class EncheresController extends AbstractController
         
         $var = array_udiff($var, $enchereRepository->findEncheresInverseesFinies(),
             function ($obj_a, $obj_b) {
+                dd($obj_a,$obj_b);
                 return $obj_a->id - $obj_b->id;
             }
         );
