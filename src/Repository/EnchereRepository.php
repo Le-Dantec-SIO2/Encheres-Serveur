@@ -88,6 +88,19 @@ class EnchereRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
     }
+
+    public function findEncheresInverseesFinies(){
+        return $this->createQueryBuilder('e')
+                ->leftJoin('e.lesencherirs','en')
+                ->innerJoin('e.letypeenchere','t')
+                ->andWhere('t.id = 2')
+                ->groupBy('e.id')
+                ->having('COUNT(en.id)>0')
+                ->select('e.id')
+                ->getQuery()
+                ->getResult();
+    }
+
     public function findEncheresEnCoursByType($IdTypeEnchere){
         $ladate = new \DateTime('now');
         $ladate = $ladate->format('Y-m-d');
