@@ -57,7 +57,8 @@ class EncheresController extends AbstractController
     public function GetEncheresFutures(Request $request, EnchereRepository $enchereRepository)
     {
         //On Récuprère toutes les enchères en cours ou on envoie true ou false si on regarde pour une enchère si elle est en cours
-        $var = $enchereRepository->findEncheresFutures();
+        $postdata = json_decode($request->getContent());
+        $var = isset($postdata->IdTypeEnchere) ? $enchereRepository->findEncheresFuturesByType($postdata->IdTypeEnchere) : $enchereRepository->findEncheresFutures();
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
