@@ -125,6 +125,18 @@ class EnchereRepository extends ServiceEntityRepository
                 ->getResult();
     }
 
+        public function findEncheresFuturesByType($IdTypeEnchere){
+        return $this->createQueryBuilder('e')
+                ->innerjoin('e.leproduit', 'p')
+                ->innerJoin('e.letypeenchere', 't')
+                ->andWhere('CURRENT_TIMESTAMP() < e.datedebut')
+                ->andWhere('t.id = :IdTypeEnchere')
+                ->setParameter(':IdTypeEnchere', $IdTypeEnchere)
+                ->orderBy('e.datedebut', 'ASC')
+                ->getQuery()
+                ->getResult();
+    }
+
     public function findEncheresParticipes($userId)
     {
         return $this->createQueryBuilder('e')
