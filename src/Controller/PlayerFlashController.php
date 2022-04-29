@@ -156,7 +156,7 @@ class PlayerFlashController extends AbstractController
         // On verifiequ'une premiere enchere a deja ete passée
         if(isset($derniereEnchere))
         //On calcule la valeur de la nouvelle enchère
-        $nouvelleEnchere = $derniereEnchere;
+        $nouvelleEnchere = $derniereEnchere['prixenchere'];
         else
         //On calcule la valeur de la nouvelle enchère avec le prix de depart
         $nouvelleEnchere = $derniereEnchere;
