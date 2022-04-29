@@ -98,6 +98,7 @@ class PlayerFlashRepository extends ServiceEntityRepository
         
             return $this->createQueryBuilder('p')
             ->innerJoin('p.laenchere', 'u')
+            ->innerJoin('p.leuser', 'l')
             ->andWhere('u.id = :val2')
             ->andWhere('p.tag = 1')
             ->orderBy('p.id','ASC')
