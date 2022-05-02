@@ -105,4 +105,14 @@ class EncheresController extends AbstractController
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
+
+    /**
+     * @Route("/api/getEncheresFinies", name="GetEncheresFinies")
+     */
+    public function GetEncheresFinies(Request $request, EnchereRepository $enchereRepository)
+    {
+        $var = $enchereRepository->findEncheresFinies();
+        $response = new Utils;
+        return $response->GetJsonResponse($request, $var);
+    }
 }

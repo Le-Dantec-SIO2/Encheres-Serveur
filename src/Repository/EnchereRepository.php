@@ -190,6 +190,17 @@ class EnchereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+    
+    public function findEncheresFinies()
+    {
+        return $this->createQueryBuilder('e')
+            ->innerjoin('e.leproduit', 'p')
+            ->innerJoin('e.letypeenchere', 't')
+            ->andWhere('CURRENT_TIMESTAMP()>e.datefin')
+            ->orderBy('e.datedebut', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
     /*
     public function findOneBySomeField($value): ?Enchere
     {
