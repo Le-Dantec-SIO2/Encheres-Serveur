@@ -113,6 +113,7 @@ class EncheresController extends AbstractController
     {
         $var = $enchereRepository->findEncheresFinies();
         $response = new Utils;
-        return $response->GetJsonResponse($request, $var);
+        $tab = ['leuser','laenchere','lesencherirs','lesencheres','lesmagasins','lesproduits'];
+        return $response->GetJsonResponse($request, $var,$tab);
     }
 }
