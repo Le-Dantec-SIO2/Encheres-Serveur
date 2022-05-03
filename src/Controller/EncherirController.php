@@ -83,7 +83,7 @@ class EncherirController extends AbstractController
         $user = $userRepository->find($postdata->IdUser);
 
         //On cherche l'enchère
-        $enchere = $enchereRepository->find($postdata->IdEnchere);
+        $enchere = $enchereRepository->findOneBy(['id' =>$postdata->IdEnchere]);
 
         //On récupère le prix de l'offre
         $prixoffre = $postdata->PrixEnchere;
