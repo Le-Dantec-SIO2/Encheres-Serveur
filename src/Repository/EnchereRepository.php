@@ -148,6 +148,7 @@ class EnchereRepository extends ServiceEntityRepository
             ->orderBy('e.datedebut', 'ASC')
             ->setParameter(':userID', $userId)
             ->select("e.id,DATE_FORMAT(e.datedebut,'%Y-%m-%d') AS date_debut,DATE_FORMAT(e.datefin,'%Y-%m-%d') AS date_fin,e.prixreserve,t.id AS type_enchere_id, p.id AS produit_id")
+            ->groupBy("e.id")
             ->getQuery()
             ->getResult();
     }
