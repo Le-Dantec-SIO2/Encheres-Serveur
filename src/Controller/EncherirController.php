@@ -88,7 +88,7 @@ class EncherirController extends AbstractController
         //On récupère le prix de l'offre
         $prixoffre = $postdata->PrixEnchere;
 
-        dd($enchere);
+        dd($user);
         if($enchere->getLetypeenchere()->getNom() != "inversevrai" || $enchere->getLetypeenchere()->getNom() != "inverse"){
                  
             //On récupère le Coefficient envoyer en paramètre si il y'en a un sinon mettre a 1 par défaut
