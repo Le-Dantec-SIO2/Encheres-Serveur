@@ -102,9 +102,11 @@ class EncherirController extends AbstractController
         $encherir = new Encherir();
         $encherir->setLeuser($user);
         $encherir->setLaenchere($enchere);
+        $enchere->setDatefin($enchere->getLetypeenchere()->getId() == 2 ? new \DateTime('now') : $enchere->getDatefin());
         $encherir->setPrixenchere($prixoffre);
         $encherir->setDateenchere(new \DateTime('now'));
-
+        
+        $em->persist($enchere);
         $em->persist($encherir);
         $em->flush();
 
