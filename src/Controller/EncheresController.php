@@ -70,8 +70,7 @@ class EncheresController extends AbstractController
     {
         $postdata = json_decode($request->getContent());
         $userId = isset($postdata->Id) ? $postdata->Id : null;
-        dd(IsNull($userId));
-        $var = IsNull($userId) ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresParticipes($userId);
+        $var = $userId == null ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresParticipes($userId);
         $response = new Utils;
         return $response->GetJsonResponse($request, $var);
     }
