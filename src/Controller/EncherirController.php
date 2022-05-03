@@ -87,8 +87,7 @@ class EncherirController extends AbstractController
 
         //On récupère le prix de l'offre
         $prixoffre = $postdata->PrixEnchere;
-        dd($enchere->getLetypeenchere()->getId());
-        if($enchere->getLetypeenchere()->getId()!=2 || $enchere->getLetypeenchere()->getId() !=4){
+        if($enchere->getLetypeenchere()->getId()!=2 && $enchere->getLetypeenchere()->getId() !=4){
                  
             //On récupère le Coefficient envoyer en paramètre si il y'en a un sinon mettre a 1 par défaut
             isset($postdata->Coefficient) ?  $coefficient = floatval(str_replace(',', '.',($postdata->Coefficient))) : $coefficient = 1;
