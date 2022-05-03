@@ -197,7 +197,7 @@ class EnchereRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->innerjoin('e.leproduit', 'p')
             ->innerJoin('e.letypeenchere', 't')
-            ->andWhere("e.datefin BETWEEN DATE_ADD(e.datefin,-1,'month') AND CURRENT_DATE()")
+            ->andWhere("e.datefin BETWEEN DATE_SUB(e.datefin,1,'month') AND CURRENT_DATE()")
             ->orderBy('e.datedebut', 'ASC')
             ->getQuery()
             ->getResult();
