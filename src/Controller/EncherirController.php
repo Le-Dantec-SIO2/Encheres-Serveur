@@ -149,6 +149,21 @@ class EncherirController extends AbstractController
         return $response->GetJsonResponse($request, $var,$tab);
     }
 
+
+    /**
+     * @Route("/malo/getLastSixOfferMalo",name="GetLastSixOfferMalo")
+     */
+    public function GetLastSixOfferMalo(Request $request, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
+    {
+        $postdata = json_decode($request->getContent());
+        $var = isset($postdata->Id) ? $id = $postdata->Id :  Utils::ErrorMissingArguments();
+        $enchere = $enchereRepository->findOneBy(['id' => $id]);
+        $var = $encherirRepository->findLastSixOffer($enchere);
+        $response = new Utils;
+        $tab = [];
+        return $response->GetJsonResponse($request, $var,$tab);
+    }
+
     public static function PriceAuthorize($IdEnchere, $prixoffre, $coefficient, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
     {
         //On cherche l'enchère

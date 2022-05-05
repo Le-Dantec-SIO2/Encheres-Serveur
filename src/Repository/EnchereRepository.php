@@ -146,7 +146,6 @@ class EnchereRepository extends ServiceEntityRepository
             ->leftJoin('en.leuser', 'u')
             ->andWhere('u.id = :userID')
             ->orderBy('e.datedebut', 'ASC')
-            ->select("e, en, p")
             ->setParameter(':userID', $userId)
             ->groupBy("e.id")
             ->getQuery()
