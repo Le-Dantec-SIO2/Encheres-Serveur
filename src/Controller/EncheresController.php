@@ -73,7 +73,7 @@ class EncheresController extends AbstractController
         $var = $userId == null ? $enchereRepository->findEncheresAll() : $enchereRepository->findEncheresParticipes($userId);
         $response = new Utils;
         $tab = ['leuser','lesencherirs','lesencheres','lesmagasins','lesproduits'];
-        return $response->GetJsonResponse($request, $var);
+        return $response->GetJsonResponse($request, $var, $tab);
     }
 
     /**
