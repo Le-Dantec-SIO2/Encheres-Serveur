@@ -143,7 +143,7 @@ class EnchereRepository extends ServiceEntityRepository
             ->innerJoin('e.leproduit', 'p')
             ->innerJoin('e.letypeenchere', 't')
             ->innerJoin('e.lesencherirs', 'en')
-            ->innerJoin('en.leuser', 'u')
+            ->leftJoin('en.leuser', 'u')
             ->andWhere('u.id = :userID')
             ->orderBy('e.datedebut', 'ASC')
             ->setParameter(':userID', $userId)
