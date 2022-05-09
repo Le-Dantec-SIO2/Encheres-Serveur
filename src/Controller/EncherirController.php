@@ -24,6 +24,53 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EncherirController extends AbstractController
 {
+
+    /**
+     * Permet d'encherir sur une enchère
+     * Retourne une réponse http
+     * @Route("/api/postEncherirImmediat", name="PostEncherirImmediat")
+     */
+    public function PostEncherirImmediat(Request $request, UserRepository $userRepository, EnchereRepository $enchereRepository, EntityManagerInterface $em, EncherirRepository $encherirRepository)
+    {
+        //On récupère les données envoyés en post
+        $postdata = json_decode($request->getContent());
+
+        //On cherche l'utilisateur
+        $user = $userRepository->find($postdata->IdUser);
+
+        //On cherche l'enchère
+        $enchere = $enchereRepository->find($postdata->IdEnchere);
+         //On cherche un encherir
+        $encherir =$encherirRepository->findOneEncherir($enchere);
+        //On récupère le prix de l'offre
+        $prixoffre = $postdata->PrixEnchere;
+
+        //On crée un objet encherir avec les valeurs trouvées
+        if ($encherir == null)
+        {
+        $encherir = new Encherir();
+        $encherir->setLeuser($user);
+        $encherir->setLaenchere($enchere);
+        $encherir->setPrixenchere($prixoffre);
+        $encherir->setDateenchere(new \DateTime('now'));
+
+        $em->persist($encherir);
+        $em->flush();
+
+        $enchere->setDatefin (new \DateTime('now'));
+        $em->persist($enchere);
+        $em->flush();
+
+        }
+
+
+        //On renvoie une réponse pour savoir si l'opération à réussie
+        $response = new Response('ok');
+        $response->headers->set('Content-Type', 'text/html');
+
+        return $response;
+    }
+    
     /**
      * Permet d'encherir sur une enchère
      * Retourne une réponse http
