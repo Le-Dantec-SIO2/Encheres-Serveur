@@ -92,6 +92,19 @@ class EncherirRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
     }
+
+    public function findLastThreeOffer($enchere){
+        return $this->createQueryBuilder('en') 
+        ->innerJoin('en.leuser', 'u')
+        ->andWhere('en.laenchere = :enchere')
+        ->orderBy('en.id','DESC')
+        ->setParameter(':enchere', $enchere)
+        ->select('en.prixenchere','u.pseudo','u.photo')
+        ->setFirstResult(0)
+        ->setMaxResults(6)
+        ->getQuery()
+        ->getResult();
+    }
     // /**
     //  * @return Encherir[] Returns an array of Encherir objects
     //  */
