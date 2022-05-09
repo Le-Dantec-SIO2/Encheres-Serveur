@@ -99,7 +99,7 @@ class EncherirRepository extends ServiceEntityRepository
         ->andWhere('en.laenchere = :enchere')
         ->orderBy('en.id','DESC')
         ->setParameter(':enchere', $enchere)
-        ->select('en.prixenchere','u.pseudo')
+        ->select('en.prixenchere','u.pseudo','u.photo')
         ->setFirstResult(0)
         ->setMaxResults(3)
         ->getQuery()
