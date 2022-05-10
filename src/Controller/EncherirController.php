@@ -193,7 +193,7 @@ class EncherirController extends AbstractController
 
 
     /**
-     * @Route("/api/getLastOffer",name="GetLastSixOffer")
+     * @Route("/api/getLastOffer",name="GetLastOffer")
      */
     public function GetLastOffer(Request $request, EncherirRepository $encherirRepository, EnchereRepository $enchereRepository)
     {
